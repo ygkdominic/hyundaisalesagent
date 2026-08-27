@@ -64,13 +64,65 @@ body.has-totalbar{padding-bottom:110px;}
   position:sticky;top:0;z-index:300;
   box-shadow:0 1px 0 rgba(49,130,246,0.15);
 }
-.brand-title{font-size:22px;font-weight:800;color:var(--hyundai-blue-mid);}
+.brand-title{font-size:26px;font-weight:800;color:var(--hyundai-blue-mid);}
 .brand-badge{
   background:#fff;color:var(--hyundai-blue-mid);
   font-size:14px;font-weight:700;padding:6px 16px;border-radius:20px;flex-shrink:0;
   box-shadow:0 2px 8px rgba(49,130,246,0.15);
 }
 
+.contact-badge{
+  position:relative;
+  background:#fff;color:var(--tx-primary);
+  font-size:14px;font-weight:700;padding:6px 16px;border-radius:20px;flex-shrink:0;
+  box-shadow:0 2px 8px rgba(49,130,246,0.15);
+  cursor:default;
+  transition:all .15s;
+}
+
+.contact-badge:hover{
+  background:var(--hyundai-blue);color:#fff;
+  box-shadow:0 4px 14px rgba(49,130,246,0.3);
+  transform:translateY(-1px);
+}
+.contact-tooltip{
+  position:absolute;
+  top:calc(100% + 10px);
+  right:0;
+  background:var(--tx-primary);color:#fff;
+  font-size:13.5px;font-weight:700;
+  padding:9px 16px;border-radius:12px;
+  white-space:nowrap;
+  box-shadow:0 8px 20px rgba(0,0,0,0.18);
+  opacity:0;visibility:hidden;
+  transform:translateY(-4px);
+  transition:all .18s ease;
+  z-index:400;
+}
+.contact-tooltip::after{
+  content:'';
+  position:absolute;
+  bottom:100%;right:18px;
+  border:6px solid transparent;
+  border-bottom-color:var(--tx-primary);
+}
+.contact-badge:hover .contact-tooltip{
+  opacity:1;visibility:visible;
+  transform:translateY(0);
+}
+.header-right{
+  display:flex;align-items:center;gap:10px;
+}
+.stats-badge{
+  display:none;
+  background:#fff;color:var(--tx-muted);
+  font-size:13px;font-weight:700;padding:6px 14px;border-radius:20px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  white-space:nowrap;
+}
+.stats-badge.show{
+  display:inline-flex;align-items:center;
+}
 .screen{display:none;}
 .screen.active{display:block;animation:fs .25s ease;}
 @keyframes fs{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
@@ -126,28 +178,93 @@ body.has-totalbar{padding-bottom:110px;}
 .pt-divider .label{font-size:14.5px;font-weight:800;color:var(--tx-muted);white-space:nowrap;}
 .pt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1000px;margin:0 auto;}
 
+.nav-zone{
+  background:var(--bg-white);
+  box-shadow:0 4px 14px rgba(0,0,0,0.05);
+  position:relative;
+  z-index:100;
+}
+
 .breadcrumb-bar{
   display:flex;align-items:center;gap:10px;
   padding:14px 24px;background:var(--bg-white);
   border-bottom:1px solid var(--bd);
-  font-size:14.5px;color:var(--tx-secondary);flex-wrap:wrap;
+  font-size:15px;color:var(--tx-secondary);flex-wrap:wrap;
+  min-height:66px;
 }
 .breadcrumb-bar strong{color:var(--tx-primary);font-weight:800;}
 .bc-btn{
   background:var(--bg-subtle);border:none;color:var(--tx-secondary);
-  font-size:13.5px;font-weight:700;padding:7px 14px;border-radius:var(--r-md);
+  font-size:15px;font-weight:700;padding:7px 14px;border-radius:var(--r-md);
   cursor:pointer;font-family:'Noto Sans KR',sans-serif;
 }
 .bc-btn:hover{background:#E5E8EB;}
 .bc-sep{color:var(--tx-light);}
 
-.vtabs{display:flex;gap:8px;padding:16px 24px 0;flex-wrap:wrap;align-items:center;}
+.search-wrap{
+  margin-left:auto;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.search-box{
+  display:flex;align-items:center;
+  background:var(--bg-white);
+  border:1.5px solid var(--bd);
+  border-radius:20px;
+  padding:4px 4px 4px 16px;
+  min-width:240px;
+  box-shadow:0 1px 4px rgba(0,0,0,0.04);
+  transition:all .15s;
+}
+.search-box:focus-within{
+  border-color:var(--hyundai-blue);
+  box-shadow:0 0 0 3px rgba(49,130,246,0.12);
+}
+.search-box input{
+  flex:1;min-width:0;border:none;outline:none;background:transparent;
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:14px;font-weight:600;color:var(--tx-primary);
+  padding:8px 4px;
+}
+.search-box input::placeholder{color:var(--tx-muted);font-weight:500;}
+.search-btn{
+  background:var(--hyundai-blue);color:#fff;border:none;border-radius:50%;
+  width:32px;height:32px;flex-shrink:0;cursor:pointer;font-size:14px;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .15s;
+  font-family:'Noto Sans KR',sans-serif;
+}
+.search-btn:hover{background:var(--hyundai-blue-mid);}
+.search-result-count{
+  font-size:13px;font-weight:700;color:var(--tx-muted);white-space:nowrap;
+}
+.search-wrap.hidden{
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.search-match{
+  outline:2px solid var(--accent-warn);
+  outline-offset:-2px;
+  background:#FFF0F1 !important;
+  animation:searchPulse 1s ease 2;
+}
+@keyframes searchPulse{
+  0%{box-shadow:0 0 0 0 rgba(240,68,82,0.35);}
+  70%{box-shadow:0 0 0 8px rgba(240,68,82,0);}
+  100%{box-shadow:0 0 0 0 rgba(240,68,82,0);}
+}
+
+.vtabs{display:flex;gap:8px;padding:16px 24px 18px;flex-wrap:wrap;align-items:center;}
 .vtab{
   padding:11px 22px;border-radius:20px;border:none;
-  background:var(--bg-white);color:var(--tx-secondary);
+  background:var(--bg);color:var(--tx-secondary);
   font-size:15px;font-weight:700;cursor:pointer;
-  box-shadow:0 1px 4px rgba(0,0,0,0.04);
+  box-shadow:0 1px 4px rgba(0,0,0,0.06);
   font-family:'Noto Sans KR',sans-serif;
+  transition:background .15s;
+}
+.vtab:not(.active):hover{
+  background:#E5E8EB;
 }
 .vtab.active{
   background:var(--hyundai-blue);color:#fff;
@@ -277,6 +394,11 @@ body.has-totalbar{padding-bottom:110px;}
   padding:2px 8px;border-radius:6px;margin-left:8px;vertical-align:middle;letter-spacing:0.3px;
 }
 .badge-option{background:var(--hyundai-azure);}
+
+.doc-links{
+  margin-left:auto;
+  display:flex;gap:8px;flex-wrap:wrap;
+}
 
 .accordion-wrap{
   margin-bottom:12px;border-radius:var(--r-xl);overflow:hidden;
@@ -523,7 +645,13 @@ body.has-totalbar #backToTopBtn{bottom:110px;}
 
 <div class="top-header">
   <span class="brand-title">경남지역본부 신차 상담 에이전트</span>
-  <span class="brand-badge">2026년 8월</span>
+  <div class="header-right">
+    <span class="stats-badge" id="statsBadge"></span>
+    <span class="contact-badge">
+      문의 : 김영관 책임
+      <span class="contact-tooltip"> 055-290-6004</span>
+    </span>
+  </div>
 </div>
 
 <div class="screen active" id="screen-select">
@@ -543,11 +671,23 @@ body.has-totalbar #backToTopBtn{bottom:110px;}
   </div>
 </div>
 
+<!-- 수정 코드 -->
 <div class="screen" id="screen-main">
+
+<div class="nav-zone">
+
   <div class="breadcrumb-bar">
-    <button class="bc-btn" id="backToSelectBtn">차종 · 파워트레인 변경</button>
+    <button class="bc-btn" id="backToSelectBtn">홈 화면 (차종/파워트레인 변경)</button>
     <span class="bc-sep">|</span>
     <strong id="mainBreadcrumb">아반떼 · 가솔린</strong>
+
+    <div class="search-wrap" id="searchWrap">
+      <div class="search-box" id="searchBox">
+        <input type="text" id="searchInput" placeholder="찾기 (예: 통풍시트, 하이패스)">
+        <button class="search-btn" id="searchBtn" type="button" aria-label="사양 검색"></button>
+      </div>
+      <span class="search-result-count" id="searchResultCount"></span>
+    </div>
   </div>
 
   <div class="vtabs">
@@ -555,7 +695,10 @@ body.has-totalbar #backToTopBtn{bottom:110px;}
     <button class="vtab" data-page="compare">트림별 사양비교</button>
     <button class="vtab" data-page="persona">고객별 모델제안</button>
     <a class="vtab vtab-link" href="https://salesallinonemobile.netlify.app" target="_blank" rel="noopener noreferrer">세일즈 올인원 이동 ↗</a>
+    <div class="doc-links" id="docLinks"></div>
   </div>
+
+</div>
 
   <div class="main">
 
@@ -712,6 +855,12 @@ const HYUNDAI_DATA = {
 
         gasoline: {
           name:'가솔린', desc:'스마트스트림 가솔린 2.0', available:true, taxNotice:false,
+            /* ★ 차종/파워트레인별 공식 링크 — 없으면 이 필드를 아예 생략하면 버튼이 자동으로 숨겨집니다 */
+          links:{
+            price:'https://www.hyundai.com/contents/repn-car/catalog/the-all-new-avante_price.pdf',
+            catalog:'https://www.hyundai.com/contents/repn-car/catalog/the-all-new-avante-catalog.pdf',
+            digital:'https://www.hyundai.com/kr/ko/e/vehicles/the-all-new-avante/catalog'
+                 },
           trims: [
             {
               id:'modern', name:'모던', price:23980000,
@@ -942,6 +1091,12 @@ const HYUNDAI_DATA = {
 
         hybrid: {
           name:'하이브리드', desc:'스마트스트림 1.6 하이브리드', available:true, taxNotice:'before',
+                     /* ★ 차종/파워트레인별 공식 링크 — 없으면 이 필드를 아예 생략하면 버튼이 자동으로 숨겨집니다 */
+          links:{
+            price:'https://www.hyundai.com/contents/repn-car/catalog/the-all-new-avante-hybrid_price.pdf',
+            catalog:'https://www.hyundai.com/contents/repn-car/catalog/the-all-new-avante-hybrid-catalog.pdf',
+            digital:'https://www.hyundai.com/kr/ko/e/vehicles/the-all-new-avante-hybrid/catalog'
+                 },
           trims: [
             {
               id:'modern', name:'모던', price:30420000,
@@ -1183,6 +1338,12 @@ const HYUNDAI_DATA = {
 
         gasoline: {
           name:'가솔린', desc:'스마트스트림 가솔린 2.5', available:true, taxNotice:false,
+                               /* ★ 차종/파워트레인별 공식 링크 — 없으면 이 필드를 아예 생략하면 버튼이 자동으로 숨겨집니다 */
+          links:{
+            price:'https://www.hyundai.com/contents/repn-car/catalog/the-new-grandeur-price.pdf',
+            catalog:'https://www.hyundai.com/contents/repn-car/catalog/the-new-grandeur-catalog.pdf',
+            digital:'https://www.hyundai.com/kr/ko/e/vehicles/the-new-grandeur/catalog'
+                 },
           trims: [
             {
               id:'premium', name:'프리미엄', price:42450000,
@@ -1375,7 +1536,12 @@ const HYUNDAI_DATA = {
 // 교체 (따옴표 없는 boolean false로 정확히 입력)
           hybrid: {
               name:'하이브리드', desc:'스마트스트림 1.6 터보 하이브리드', available:true, taxNotice:false,
-          trims: [
+                   links:{
+            price:'https://www.hyundai.com/contents/repn-car/catalog/the-new-grandeur-hybrid-price.pdf',
+            catalog:'https://www.hyundai.com/contents/repn-car/catalog/the-new-grandeur-hybrid-catalog.pdf',
+            digital:'https://www.hyundai.com/kr/ko/e/vehicles/the-new-grandeur-hybrid/catalog'
+                 },
+            trims: [
             {
               id:'premium', name:'프리미엄', price:48330000,
               add:{
@@ -1628,24 +1794,27 @@ function renderPtGrid(){
       <div class="select-card-desc">${p.desc}</div>
     `;
     if(p.available){
-      card.addEventListener('click', ()=>{
-        playSelectAnim(card);
-        currentPowertrain = ptId;
-        TRIMS = p.trims;
-        currentBestsellers = p.bestsellers;
-        document.getElementById('mainBreadcrumb').textContent = `${carObj.name} · ${p.name}`;
-        selectedTrimIndex = 0;
-        selectedOptionKeys = new Set();
-        updatePowertrainUI(p);
-        renderAll();
-        renderPrefGrid();
-        renderRecommendations();
-        renderBestsellerPage();
-        setTimeout(()=>{
+    card.addEventListener('click', ()=>{
+      playSelectAnim(card);
+     currentPowertrain = ptId;
+     TRIMS = p.trims;
+     currentBestsellers = p.bestsellers;
+     document.getElementById('mainBreadcrumb').textContent = `${carObj.name} · ${p.name}`;
+     selectedTrimIndex = 0;
+     selectedOptionKeys = new Set();
+      updatePowertrainUI(p);
+     renderDocLinks();          /* ← 이 줄 추가 */
+     resetSearch();          /* ← 이 줄 추가 */
+     renderAll();
+     renderPrefGrid();
+     renderRecommendations();
+     renderBestsellerPage();
+     setTimeout(()=>{
           switchScreen('screen-main');
-          setTimeout(equalizeBestsellerRows, 30);
-        }, 180);
-      });
+         setTimeout(equalizeBestsellerRows, 30);
+     }, 180);
+    });
+
     }
     grid.appendChild(card);
   });
@@ -1663,6 +1832,134 @@ function updatePowertrainUI(p){
   document.getElementById('taxNoticeBar').classList.toggle('show', isTax);
 }
 
+/* 수정 코드 */
+function renderDocLinks(){
+  const container = document.getElementById('docLinks');
+  const carObj = HYUNDAI_DATA.cars[currentCar];
+  const pt = (carObj && currentPowertrain) ? carObj.powertrains[currentPowertrain] : null;
+  const links = pt && pt.links;
+
+  if(!links){
+    container.innerHTML = '';
+    return;
+  }
+
+  const items = [
+    {key:'price',   label:'가격표 ↗',        url:links.price},
+    {key:'catalog', label:'카탈로그 ↗',       url:links.catalog},
+    {key:'digital', label:'디지털 카탈로그 ↗', url:links.digital}
+  ];
+
+  container.innerHTML = items
+    .filter(it => !!it.url)
+    .map(it => `<a class="vtab vtab-link" href="${it.url}" target="_blank" rel="noopener noreferrer">${it.label}</a>`)
+    .join('');
+}
+
+function getSpecItemElements(){
+  return Array.from(document.querySelectorAll('#tableBody .spec-item'));
+}
+
+function getOptionNameElements(){
+  return Array.from(document.querySelectorAll('#optionsGrid .pkg-name'));
+}
+
+function getOptionItemElements(){
+  return Array.from(document.querySelectorAll('#optionsGrid .pkg-items span'));
+}
+
+function clearSearchHighlights(){
+  document.querySelectorAll('.search-match').forEach(el=>el.classList.remove('search-match'));
+}
+
+/* 수정 코드 */
+function performSpecSearch(jump){
+  const input = document.getElementById('searchInput');
+  const countEl = document.getElementById('searchResultCount');
+  const q = input.value.trim().toLowerCase();
+
+  clearSearchHighlights();
+
+  if(!q){
+    countEl.textContent = '';
+    return;
+  }
+
+  /* ① 사양비교표 매칭 */
+  const specItems = getSpecItemElements();
+  const matchedSpecs = specItems.filter(li => li.textContent.toLowerCase().includes(q));
+
+  /* ② 옵션 패키지명 매칭 */
+  const optionNames = getOptionNameElements();
+  const matchedOptionNames = optionNames.filter(el => el.textContent.toLowerCase().includes(q));
+
+  /* ③ 옵션 패키지 구성품목 매칭 */
+  const optionItems = getOptionItemElements();
+  const matchedOptionItems = optionItems.filter(el => el.textContent.toLowerCase().includes(q));
+
+  matchedSpecs.forEach(li => li.classList.add('search-match'));
+  matchedOptionNames.forEach(el => el.classList.add('search-match'));
+  matchedOptionItems.forEach(el => el.classList.add('search-match'));
+
+  /* 옵션 쪽에 매칭이 있으면 해당 아코디언을 자동으로 펼쳐서 바로 보이게 함 */
+  [...matchedOptionNames, ...matchedOptionItems].forEach(el=>{
+    const wrap = el.closest('.accordion-wrap');
+    if(!wrap) return;
+    const btn = wrap.querySelector('.accordion-btn');
+    const body = wrap.querySelector('.accordion-body');
+    if(btn && body){
+      btn.classList.add('open');
+      body.classList.add('open');
+    }
+  });
+
+  const optionMatchCount = matchedOptionNames.length + matchedOptionItems.length;
+  const totalCount = matchedSpecs.length + optionMatchCount;
+
+  countEl.textContent = totalCount
+    ? `${totalCount}건 일치 (사양비교 ${matchedSpecs.length} · 옵션 패키지 ${optionMatchCount})`
+    : '일치하는 사양이 없습니다';
+
+  if(jump && totalCount){
+    document.querySelectorAll('.vtab:not(.vtab-link)').forEach(b=>b.classList.remove('active'));
+    const compareTabBtn = document.querySelector('.vtab[data-page="compare"]');
+    if(compareTabBtn) compareTabBtn.classList.add('active');
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page-compare').classList.add('active');
+    updateTotalBarVisibility();
+
+    const firstMatch = matchedSpecs[0] || matchedOptionNames[0] || matchedOptionItems[0];
+    if(firstMatch){
+      setTimeout(()=>{
+        firstMatch.scrollIntoView({behavior:'smooth', block:'center'});
+      }, 80);
+    }
+  }
+}
+
+function resetSearch(){
+  const input = document.getElementById('searchInput');
+  const countEl = document.getElementById('searchResultCount');
+  if(input) input.value = '';
+  if(countEl) countEl.textContent = '';
+  clearSearchHighlights();
+}
+
+let searchDebounce = null;
+document.getElementById('searchInput').addEventListener('input', ()=>{
+  clearTimeout(searchDebounce);
+  searchDebounce = setTimeout(()=>performSpecSearch(false), 200);
+});
+document.getElementById('searchInput').addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter'){
+    e.preventDefault();
+    performSpecSearch(true);
+  }
+});
+document.getElementById('searchBtn').addEventListener('click', ()=>{
+  performSpecSearch(true);
+});
+
 function switchScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -1671,6 +1968,7 @@ function switchScreen(id){
 }
 
 document.getElementById('backToSelectBtn').addEventListener('click', ()=>{
+  resetSearch();          /* ← 이 줄 추가 */
   switchScreen('screen-select');
 });
 
@@ -1971,11 +2269,26 @@ function updateTotalBar(){
 }
 
 function updateTotalBarVisibility(){
-  const onMain = document.getElementById('screen-main').classList.contains('active');
-  const onComparePage = document.getElementById('page-compare').classList.contains('active');
+  const screenMainEl = document.getElementById('screen-main');
+  const comparePageEl = document.getElementById('page-compare');
+  const totalBarEl = document.getElementById('total-bar');
+  const searchWrapEl = document.getElementById('searchWrap');
+
+  if(!screenMainEl || !comparePageEl || !totalBarEl){
+    console.warn('updateTotalBarVisibility: 필요한 요소를 찾지 못했습니다.');
+    return;
+  }
+
+  const onMain = screenMainEl.classList.contains('active');
+  const onComparePage = comparePageEl.classList.contains('active');
   const show = onMain && onComparePage && TRIMS.length > 0;
-  document.getElementById('total-bar').classList.toggle('show', show);
+  totalBarEl.classList.toggle('show', show);
   document.body.classList.toggle('has-totalbar', show);
+
+  /* ★ 트림별 사양비교 탭이 활성화된 경우에만 검색창 노출 */
+  if(searchWrapEl){
+    searchWrapEl.classList.toggle('hidden', !onComparePage);
+  }
 }
 
 function renderAll(){
@@ -2201,6 +2514,46 @@ window.addEventListener('scroll', ()=>{
 backToTopBtn.addEventListener('click', ()=>{
   window.scrollTo({top:0, behavior:'smooth'});
 });
+
+/* ============================================================
+   ★★★ 방문자 카운터 (Abacus 무료 API 사용) ★★★
+   ============================================================ */
+const STATS_NAMESPACE = 'gyeongnam-hyundai-agent';
+
+function getTodayKey(){
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `daily-${yyyy}${mm}${dd}`;
+}
+
+async function trackVisit(){
+  try{
+    const [totalRes, todayRes] = await Promise.all([
+      fetch(`https://abacus.jasoncameron.dev/hit/${STATS_NAMESPACE}/total-visits`).then(r => r.json()),
+      fetch(`https://abacus.jasoncameron.dev/hit/${STATS_NAMESPACE}/${getTodayKey()}`).then(r => r.json())
+    ]);
+    const total = totalRes.value;
+    const today = todayRes.value;
+
+    console.log(`%c[방문 통계] 오늘: ${today} · 누적: ${total}`, 'color:#3182F6;font-weight:bold;');
+    updateStatsBadge(today, total);
+  }catch(e){
+    console.warn('방문자 카운터 로드 실패 (무료 API 일시 오류일 수 있음):', e);
+  }
+}
+
+function updateStatsBadge(today, total){
+  const badge = document.getElementById('statsBadge');
+  if(!badge) return;
+  badge.textContent = `오늘 ${today} · 누적 ${total}`;
+
+  const params = new URLSearchParams(window.location.search);
+  if(params.get('stats') === '1'){
+    badge.classList.add('show');
+  }
+}
 
 renderCarGrid();
 window.addEventListener('resize', equalizeBestsellerRows);
