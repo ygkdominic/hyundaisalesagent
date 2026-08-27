@@ -572,13 +572,24 @@ h4.sub-title{font-size:15.5px;font-weight:800;color:var(--tx-primary);margin:20p
   text-align:center;color:var(--tx-muted);font-size:15.5px;line-height:1.8;
 }
 
-.pref-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px;}
+.pref-grid{display:flex;flex-direction:column;gap:22px;margin-bottom:24px;}
+
+.pref-section-header{
+  display:flex;align-items:center;gap:8px;
+  font-size:14.5px;font-weight:800;color:var(--tx-secondary);
+  padding-bottom:10px;margin-bottom:14px;
+  border-bottom:1.5px solid var(--bd);
+}
+.pref-section-header .dot{
+  width:7px;height:7px;border-radius:50%;background:var(--hyundai-blue);flex-shrink:0;
+}
+.pref-section-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;}
 
 .pref-chip{
   background:var(--bg-white);border:2px solid var(--bd);border-radius:var(--r-lg);
-  padding:16px 40px 16px 14px;position:relative;text-align:left;cursor:pointer;
-  font-size:14px;font-weight:700;color:var(--tx-secondary);
-  transition:all .15s;box-shadow:0 2px 10px rgba(0,0,0,.04);line-height:1.5;
+  padding:13px 34px 13px 12px;position:relative;text-align:left;cursor:pointer;
+  font-size:13.5px;font-weight:700;color:var(--tx-secondary);
+  transition:all .15s;box-shadow:0 2px 10px rgba(0,0,0,.04);line-height:1.4;
 }
 .pref-chip:hover{border-color:var(--hyundai-blue);color:var(--tx-primary);}
 .pref-chip.selected{
@@ -586,13 +597,31 @@ h4.sub-title{font-size:15.5px;font-weight:800;color:var(--tx-primary);margin:20p
   color:var(--hyundai-blue-mid);box-shadow:0 0 0 3px rgba(49,130,246,.12);
 }
 .pref-chip .pref-check{
-  position:absolute;top:12px;right:12px;width:22px;height:22px;border-radius:50%;
-  border:2px solid rgba(0,0,0,0.1);background:#fff;
+  position:absolute;top:10px;right:10px;width:20px;height:20px;border-radius:50%;
+  border:2px solid rgba(0,0,0,0.15);background:#fff;
   display:flex;align-items:center;justify-content:center;
-  font-size:13px;font-weight:900;color:transparent;
+  font-size:12px;font-weight:900;color:transparent;
+  line-height:1;
 }
-.pref-chip.selected .pref-check{background:var(--hyundai-blue);border-color:var(--hyundai-blue);color:#fff;}
+.pref-chip.selected .pref-check{
+  background:var(--hyundai-blue);border-color:var(--hyundai-blue);color:#fff;
+}
+.pref-radio-tag{
+  font-size:10.5px;font-weight:700;color:var(--tx-light);margin-left:3px;
+}
+.pref-chip.selected .pref-radio-tag{color:var(--hyundai-blue-mid);}
 
+.pref-reset-wrap{
+  display:flex;justify-content:flex-end;margin-top:16px;
+}
+.pref-reset-btn{
+  background:var(--bg-subtle);border:none;color:var(--tx-secondary);
+  font-size:13.5px;font-weight:700;padding:9px 18px;border-radius:var(--r-md);
+  cursor:pointer;font-family:'Noto Sans KR',sans-serif;
+  transition:background .15s;
+}
+
+.pref-reset-btn:hover{background:#E5E8EB;}
 .reco-placeholder{
   background:var(--bg-subtle);border-radius:var(--r-xl);padding:44px 20px;
   text-align:center;color:var(--tx-muted);font-size:15px;line-height:1.7;
@@ -626,6 +655,30 @@ h4.sub-title{font-size:15.5px;font-weight:800;color:var(--tx-primary);margin:20p
 .reco-infeasible{
   margin-top:18px;background:#FFFCF0;border-radius:var(--r-lg);padding:12px 14px;
   font-size:13.5px;color:#664800;box-shadow:inset 0 0 0 1.5px rgba(255,159,10,.25);line-height:1.7;
+}
+
+.persona-split{
+  display:grid;
+  grid-template-columns:1.3fr 1fr;
+  gap:28px;
+  align-items:start;
+}
+.persona-col-left{min-width:0;}
+.persona-col-right{
+  position:sticky;
+  top:88px;
+  max-height:calc(100vh - 108px);
+  overflow-y:auto;
+  min-width:0;
+  padding-right:2px;
+}
+@media (max-width: 980px){
+  .persona-split{grid-template-columns:1fr;gap:0;}
+  .persona-col-right{
+    position:static;
+    max-height:none;
+    overflow:visible;
+  }
 }
 
 #backToTopBtn{
@@ -757,23 +810,32 @@ body.has-totalbar #backToTopBtn{bottom:110px;}
 
   </div>
 
-  <div class="page" id="page-persona">
+<div class="page" id="page-persona">
 
-    <div class="car-hd">
-      <div class="car-hd-title">고객이 원하는 사양을 선택하세요</div>
-      <div class="car-hd-sub">여러 개를 동시에 선택할 수 있습니다. 선택한 사양을 모두 충족하는 가장 경제적인 트림+옵션 조합을 계산해서 보여드립니다.</div>
+  <div class="car-hd">
+    <div class="car-hd-title">고객이 원하는 사양을 선택하세요</div>
+    <div class="car-hd-sub">여러 개를 동시에 선택할 수 있습니다. 선택한 사양을 모두 충족하는 가장 경제적인 트림+옵션 조합을 계산해서 보여드립니다.</div>
+  </div>
+
+  <div class="tax-notice-box" id="taxNoticePersona"></div>
+
+  <div class="persona-split">
+
+    <div class="persona-col-left">
+      <div class="sl"><span class="sl-num">1</span>고객 선호 사양 선택</div>
+      <div class="pref-grid" id="prefGrid"></div>
+      <div class="pref-reset-wrap">
+        <button class="pref-reset-btn" id="prefResetBtn" type="button">선택 초기화</button>
+      </div>
     </div>
 
-    <div class="tax-notice-box" id="taxNoticePersona"></div>
-
-    <div class="sl"><span class="sl-num">1</span>고객 선호 사양 선택</div>
-    <div class="pref-grid" id="prefGrid"></div>
-
-    <div class="sl"><span class="sl-num step2">2</span>추천 조합</div>
-    <div id="recoArea"></div>
-  </div>
+    <div class="persona-col-right">
+      <div class="sl"><span class="sl-num step2">2</span>추천 조합</div>
+      <div id="recoArea"></div>
+    </div>
 
   </div>
+
 </div>
 
 <div id="total-bar">
@@ -822,6 +884,13 @@ function playCheckAnim(el){
 
 const CATEGORY_ORDER = ["파워트레인/성능","안전","지능형 안전 기술","외관","내장","시트","편의","인포테인먼트"];
 
+function prefKeywordList(p){
+  return Array.isArray(p.keyword) ? p.keyword : [p.keyword];
+}
+function textMatchesPref(text, p){
+  return prefKeywordList(p).some(kw => text.includes(kw));
+}
+
 /* ============================================================
    ★★★ 세제혜택 안내 문구 (파워트레인의 taxNotice 값에 따라 자동 선택) ★★★
    taxNotice: false → 안내 없음 / 'before' → 적용 전 문구 / 'after' → 적용 후 문구
@@ -855,19 +924,43 @@ const HYUNDAI_DATA = {
   cars: {
 
     avante: {
-      name:'아반떼', desc:'준중형 세단', available:true,
-      /* ★ 아반떼 전용 고객 선호사양 목록 */
-      preferences: [
-        {id:'leather', label:'인조가죽 시트', keyword:'인조가죽 시트'},
-        {id:'vent', label:'1열 통풍시트', keyword:'통풍시트'},
-        {id:'rearlamp', label:'Full LED 리어 콤비램프(스탑/테일/턴)', keyword:'Full LED 리어 콤비램프'},
-        {id:'wheel17', label:'17인치 알로이 휠 & 타이어', keyword:'17인치 알로이 휠 & 타이어'},
-        {id:'slim99', label:'9.9인치 슬림 디스플레이', keyword:'9.9인치 슬림 디스플레이'},
-        {id:'powerseat', label:'운전석 전동시트(8way, 4way 럼버서포트, 자세 메모리 시스템)', keyword:'운전석 전동시트'},
-        {id:'aircon', label:'듀얼 풀오토 에어컨(오토 디포그/미세먼지 센서/공기청정모드)', keyword:'듀얼 풀오토 에어컨'},
-        {id:'hipass', label:'하이패스', keyword:'하이패스'},
-        {id:'navi', label:'내비게이션(맵)', keyword:'내비게이션(맵)'}
-      ],
+      name:'디 올 뉴 아반떼', desc:'준중형 세단', available:true,
+preferences: [
+  /* 외관 · 디자인 */
+  {id:'headlamp', label:'Full LED 헤드램프', keyword:'Full LED 헤드램프', section:'외관 · 디자인'},
+  {id:'rearlamp', label:'Full LED 리어 콤비램프', keyword:'Full LED 리어 콤비램프', section:'외관 · 디자인'},
+  {id:'wheel17', label:'17인치 휠', keyword:'17인치 알로이 휠 & 타이어', section:'외관 · 디자인', group:'wheelsize'},
+  {id:'wheel18', label:'18인치 휠', keyword:'18인치 알로이 휠 & 타이어', section:'외관 · 디자인', group:'wheelsize'},
+
+  /* 시트 */
+  {id:'steerheat', label:'스티어링 휠 열선', keyword:'스티어링 휠(열선 포함)', section:'시트'},
+  {id:'leatherseat', label:'인조가죽 시트', keyword:'인조가죽 시트', section:'시트', group:'seatmaterial'},
+  {id:'natleatherseat', label:'천연가죽 시트', keyword:'천연가죽 시트', section:'시트', group:'seatmaterial'},
+  {id:'vent', label:'1열 통풍시트', keyword:'통풍시트', section:'시트'},
+  {id:'heat1', label:'1열 열선시트', keyword:['1열 열선시트','1열 열선/통풍시트'], section:'시트'},
+  {id:'heat2', label:'2열 열선시트', keyword:'2열 열선시트', section:'시트'},
+  {id:'powerseat', label:'운전석 전동시트', keyword:'운전석 전동시트', section:'시트'},
+
+  /* 공조 */
+  {id:'aircon', label:'듀얼 풀오토 에어컨', keyword:'듀얼 풀오토 에어컨', section:'공조'},
+
+  /* 편의 */
+  {id:'hipass', label:'하이패스', keyword:'하이패스', section:'편의'},
+  {id:'digitalkey', label:'디지털 키 2', keyword:'디지털 키 2', section:'편의'},
+  {id:'surround', label:'서라운드 뷰 모니터', keyword:'서라운드 뷰 모니터', section:'편의'},
+  {id:'remotepark', label:'원격 스마트 주차 보조', keyword:'원격 스마트 주차 보조', section:'편의'},
+  {id:'builtincam', label:'빌트인 캠 2 Plus', keyword:'빌트인 캠 2 Plus', section:'편의'},
+
+  /* 인포테인먼트 */
+  {id:'display129', label:'12.9인치 디스플레이', keyword:'플레오스 커넥트 12.9인치', section:'인포테인먼트', group:'infodisplay'},
+  {id:'display146', label:'14.6인치 디스플레이', keyword:'플레오스 커넥트 14.6인치', section:'인포테인먼트', group:'infodisplay'},
+  {id:'slim99', label:'9.9인치 슬림 계기판', keyword:'9.9인치 슬림 디스플레이', section:'인포테인먼트'},
+  {id:'navi', label:'내비게이션 + 글레오 AI', keyword:'내비게이션(맵)', section:'인포테인먼트'},
+  {id:'bose', label:'B&O 프리미엄 사운드', keyword:'BANG & OLUFSEN', section:'인포테인먼트'},
+    /* 주행 · 안전 */
+  {id:'rearcollision', label:'후측방 충돌방지 보조(주행)', keyword:'후측방 충돌방지 보조(주행)', section:'주행 · 안전'}
+],
+
       powertrains: {
 
         gasoline: {
@@ -1350,19 +1443,39 @@ const HYUNDAI_DATA = {
        ★★★ 그랜저 전체 데이터 (세제혜택 후 가격 적용, taxNotice:'after') ★★★
        ============================================================ */
     grandeur: {
-      name:'그랜저', desc:'준대형 세단', available:true,
-      preferences: [
-        {id:'natural_leather', label:'천연가죽 시트', keyword:'천연 가죽 시트'},
-        {id:'sunroof', label:'파노라마 선루프', keyword:'파노라마 선루프'},
-        {id:'bose', label:'BOSE 프리미엄 사운드', keyword:'BOSE 프리미엄 사운드'},
-        {id:'hud', label:'헤드업 디스플레이', keyword:'헤드업 디스플레이'},
-        {id:'digitalkey', label:'디지털 키 2', keyword:'디지털 키 2'},
-        {id:'surround', label:'서라운드 뷰 모니터', keyword:'서라운드 뷰 모니터'},
-        {id:'ventseat2', label:'2열 통풍시트', keyword:'2열 통풍 시트'},
-        {id:'ambient', label:'인터랙티브 앰비언트 무드램프', keyword:'앰비언트 무드램프'},
-        {id:'ergoseat', label:'운전석 에르고 모션 시트', keyword:'에르고 모션 시트'},
-        {id:'smarttrunk', label:'스마트 파워 트렁크', keyword:'스마트 파워 트렁크'}
-      ],
+      name:'더 뉴 그랜저', desc:'준대형 세단', available:true,
+preferences: [
+  /* 외관 · 디자인 */
+  {id:'headlamp', label:'Full LED 헤드램프(멀티 셀 프로젝션)', keyword:'Full LED 헤드램프', section:'외관 · 디자인'},
+  {id:'wheel19', label:'19인치 알로이 휠', keyword:'19인치', section:'외관 · 디자인', group:'wheelsize'},
+  {id:'wheel20', label:'20인치 알로이 휠', keyword:'20인치', section:'외관 · 디자인', group:'wheelsize'},
+
+  /* 시트 */
+  {id:'heatvent1', label:'1열 열선/통풍 시트', keyword:'1열 열선/통풍 시트', section:'시트'},
+  {id:'natleather', label:'천연가죽 시트', keyword:['천연 가죽 시트','나파 가죽 시트'], section:'시트', group:'seatgrade'},
+  {id:'nappaleather', label:'나파 가죽 시트(퀼팅·파이핑)', keyword:'나파 가죽 시트', section:'시트', group:'seatgrade'},
+  {id:'vent2', label:'2열 통풍 시트', keyword:'2열 통풍 시트', section:'시트'},
+  {id:'doorcurtain2', label:'2열 전동식 도어커튼', keyword:'2열 전동식 도어커튼', section:'시트'},
+
+  /* 공조 */
+  {id:'tripleaircon', label:'3존 독립제어 에어컨', keyword:'3존 독립제어 에어컨', section:'공조'},
+
+  /* 주행 · 안전 */
+  {id:'previewsusp', label:'프리뷰 전자제어 서스펜션', keyword:'프리뷰 전자제어 서스펜션', section:'주행 · 안전'},
+  {id:'rearcollision', label:'후측방 충돌방지 보조(주행)', keyword:'후측방 충돌방지 보조(주행)', section:'주행 · 안전'},
+
+  /* 편의 */
+  {id:'digitalkey', label:'디지털 키 2', keyword:'디지털 키 2', section:'편의'},
+  {id:'smarttrunk', label:'스마트 파워 트렁크', keyword:'스마트 파워 트렁크', section:'편의'},
+  {id:'surround', label:'서라운드 뷰 모니터', keyword:'서라운드 뷰 모니터', section:'편의'},
+  {id:'remotepark', label:'원격 스마트 주차 보조', keyword:'원격 스마트 주차 보조', section:'편의'},
+
+  /* 인포테인먼트 */
+  {id:'slim99', label:'9.9인치 슬림 디스플레이', keyword:'9.9인치 슬림 디스플레이', section:'인포테인먼트'},
+  {id:'navi17', label:'플레오스 커넥트 17인치 + 글레오 AI', keyword:'플레오스 커넥트 17인치', section:'인포테인먼트'},
+  {id:'hud', label:'헤드업 디스플레이', keyword:'헤드업 디스플레이', section:'인포테인먼트'},
+  {id:'bose', label:'BOSE 프리미엄 사운드', keyword:'BOSE 프리미엄 사운드', section:'인포테인먼트'}
+],
       powertrains: {
 
         gasoline: {
@@ -2392,6 +2505,12 @@ document.getElementById('resetBtn').addEventListener('click', (e)=>{
   renderAll();
 });
 
+document.getElementById('prefResetBtn').addEventListener('click', ()=>{
+  selectedPrefIds = new Set();
+  renderPrefGrid();
+  renderRecommendations();
+});
+
 function equalizeBestsellerRows(){
   const groups = {};
   document.querySelectorAll('.bs-row').forEach(el=>{
@@ -2407,33 +2526,75 @@ function equalizeBestsellerRows(){
   });
 }
 
+/* 수정 코드 */
 function renderPrefGrid(){
-  const grid = document.getElementById('prefGrid');
-  grid.innerHTML = '';
+  const container = document.getElementById('prefGrid');
+  container.innerHTML = '';
+
+  const sections = [];
+  const sectionIndex = {};
   PREFERENCES.forEach(p=>{
-    const chip = document.createElement('div');
-    chip.className = 'pref-chip' + (selectedPrefIds.has(p.id) ? ' selected' : '');
-    chip.innerHTML = `<div class="pref-check">✓</div>${p.label}`;
-    chip.addEventListener('click', ()=>{
-      const willSelect = !selectedPrefIds.has(p.id);
-      if(willSelect) playSelectAnim(chip);
-      if(selectedPrefIds.has(p.id)) selectedPrefIds.delete(p.id);
-      else selectedPrefIds.add(p.id);
-      renderPrefGrid();
-      renderRecommendations();
-      if(willSelect){
-        requestAnimationFrame(()=>{
-          const idx = PREFERENCES.indexOf(p);
-          const refreshed = document.querySelectorAll('.pref-chip')[idx];
-          if(refreshed) playCheckAnim(refreshed.querySelector('.pref-check'));
-        });
-      }
+    const sec = p.section || '기타';
+    if(!(sec in sectionIndex)){
+      sectionIndex[sec] = sections.length;
+      sections.push({name:sec, items:[]});
+    }
+    sections[sectionIndex[sec]].items.push(p);
+  });
+
+  sections.forEach(section=>{
+    const secDiv = document.createElement('div');
+    secDiv.className = 'pref-section';
+
+    const header = document.createElement('div');
+    header.className = 'pref-section-header';
+    header.innerHTML = `<span class="dot"></span>${section.name}`;
+    secDiv.appendChild(header);
+
+    const grid = document.createElement('div');
+    grid.className = 'pref-section-grid';
+
+    section.items.forEach(p=>{
+      const chip = document.createElement('div');
+      chip.className = 'pref-chip' + (selectedPrefIds.has(p.id) ? ' selected' : '');
+      chip.dataset.id = p.id;
+      chip.innerHTML = `<div class="pref-check">✓</div>${p.label}${p.group ? '<span class="pref-radio-tag">· 택1</span>' : ''}`;
+
+      chip.addEventListener('click', ()=>{
+        const willSelect = !selectedPrefIds.has(p.id);
+
+        /* ★ 같은 group을 가진 항목은 서로 배타적으로 선택되도록 처리 */
+        if(p.group){
+          PREFERENCES.filter(x => x.group === p.group).forEach(x => selectedPrefIds.delete(x.id));
+        }
+
+        if(willSelect){
+          selectedPrefIds.add(p.id);
+          playSelectAnim(chip);
+        }else{
+          selectedPrefIds.delete(p.id);
+        }
+
+        renderPrefGrid();
+        renderRecommendations();
+
+        if(willSelect){
+          requestAnimationFrame(()=>{
+            const refreshed = document.querySelector(`.pref-chip[data-id="${p.id}"] .pref-check`);
+            if(refreshed) playCheckAnim(refreshed);
+          });
+        }
+      });
+
+      grid.appendChild(chip);
     });
-    grid.appendChild(chip);
+
+    secDiv.appendChild(grid);
+    container.appendChild(secDiv);
   });
 }
 
-function chooseBestOptionsForTrim(trimIdx, uncoveredKeywords){
+function chooseBestOptionsForTrim(trimIdx, uncoveredPrefs){
   const opts = TRIMS[trimIdx].options;
   const n = opts.length;
   let best = null;
@@ -2456,7 +2617,7 @@ function chooseBestOptionsForTrim(trimIdx, uncoveredKeywords){
 
     const combinedTexts = [];
     chosenIdx.forEach(i=> opts[i].items.forEach(it=>combinedTexts.push(it.text)));
-    const allCovered = uncoveredKeywords.every(k => combinedTexts.some(t=>t.includes(k)));
+    const allCovered = uncoveredPrefs.every(p => combinedTexts.some(t=>textMatchesPref(t,p)));
     if(!allCovered) continue;
 
     const cost = chosenIdx.reduce((s,i)=>s+opts[i].price, 0);
@@ -2467,14 +2628,14 @@ function chooseBestOptionsForTrim(trimIdx, uncoveredKeywords){
   return best;
 }
 
-function computeRecommendations(selectedKeywords){
+function computeRecommendations(selectedPrefs){
   const results = [];
   TRIMS.forEach((trim, idx)=>{
     const baseTexts = flattenTexts(buildColumnItems(idx, []));
-    const uncovered = selectedKeywords.filter(k => !baseTexts.some(t=>t.includes(k)));
+    const uncovered = selectedPrefs.filter(p => !baseTexts.some(t=>textMatchesPref(t,p)));
 
     if(uncovered.length === 0){
-      results.push({trimIdx:idx, feasible:true, cost:trim.price, chosenOptions:[], covered:selectedKeywords, uncoveredBase:[]});
+      results.push({trimIdx:idx, feasible:true, cost:trim.price, chosenOptions:[], covered:selectedPrefs, uncoveredBase:[]});
       return;
     }
 
@@ -2485,20 +2646,21 @@ function computeRecommendations(selectedKeywords){
         trimIdx:idx, feasible:true,
         cost: trim.price + best.cost,
         chosenOptions,
-        covered: selectedKeywords.filter(k=>!uncovered.includes(k)),
+        covered: selectedPrefs.filter(p=>!uncovered.includes(p)),
         uncoveredBase: uncovered
       });
     } else {
       const opts = TRIMS[idx].options;
       const allTexts = [];
       opts.forEach(o=>o.items.forEach(it=>allTexts.push(it.text)));
-      const trulyMissing = uncovered.filter(k => !allTexts.some(t=>t.includes(k)));
+      const trulyMissing = uncovered.filter(p => !allTexts.some(t=>textMatchesPref(t,p)));
       results.push({trimIdx:idx, feasible:false, missing: trulyMissing.length ? trulyMissing : uncovered});
     }
   });
   return results;
 }
 
+/* 수정 코드 */
 function renderRecommendations(){
   const area = document.getElementById('recoArea');
   const selectedPrefs = PREFERENCES.filter(p=>selectedPrefIds.has(p.id));
@@ -2513,11 +2675,7 @@ function renderRecommendations(){
     return;
   }
 
-  const keywords = selectedPrefs.map(p=>p.keyword);
-  const labelByKeyword = {};
-  selectedPrefs.forEach(p=>labelByKeyword[p.keyword]=p.label);
-
-  const results = computeRecommendations(keywords);
+  const results = computeRecommendations(selectedPrefs);
   const feasible = results.filter(r=>r.feasible).sort((a,b)=>a.cost-b.cost);
   const infeasible = results.filter(r=>!r.feasible);
 
@@ -2533,12 +2691,14 @@ function renderRecommendations(){
       const isFirst = rankIdx === 0;
       const diffHtml = !isFirst ? `<div class="reco-diff">1안 대비 +${toManwon(r.cost - top2[0].cost)}만원</div>` : `<div class="reco-diff">선택하신 사양을 모두 충족하는 가장 경제적인 구성입니다.</div>`;
 
-      const coveredTags = r.covered.map(k=>`<span class="reco-tag covered">${labelByKeyword[k]}</span>`).join('');
+      const coveredTags = r.covered.map(p=>`<span class="reco-tag covered">${p.label}</span>`).join('');
 
       let optsHtml = '';
       if(r.chosenOptions.length){
         optsHtml = r.chosenOptions.map(opt=>{
-          const matchedLabels = keywords.filter(k => opt.items.some(it=>it.text.includes(k))).map(k=>labelByKeyword[k]);
+          const matchedLabels = selectedPrefs
+            .filter(p => opt.items.some(it=>textMatchesPref(it.text, p)))
+            .map(p=>p.label);
           return `<div class="reco-opt-item">
             <div class="opt-head"><span>${opt.name}</span><span>+${toManwon(opt.price)}만원</span></div>
             <div class="opt-body">충족 사양: ${matchedLabels.join(', ')}</div>
@@ -2554,9 +2714,9 @@ function renderRecommendations(){
           <div class="reco-trim">${trim.name} 트림</div>
           <div class="reco-price">${toManwon(r.cost)}만원</div>
           ${diffHtml}
-          <div class="reco-section-title">충족되는 선호 사양</div>
+          <div class="reco-section-title">트림 내 기본 적용되는 선호 사양</div>
           <div class="reco-tag-list">${coveredTags}</div>
-          <div class="reco-section-title">필요한 옵션 구성</div>
+          <div class="reco-section-title">추가 필요한 옵션 구성</div>
           ${optsHtml}
         </div>
       `;
@@ -2567,7 +2727,7 @@ function renderRecommendations(){
   if(infeasible.length){
     infeasible.forEach(r=>{
       const trim = TRIMS[r.trimIdx];
-      const missingLabels = r.missing.map(k=>labelByKeyword[k]).join(', ');
+      const missingLabels = r.missing.map(p=>p.label).join(', ');
       html += `<div class="reco-infeasible"><strong>${trim.name}</strong> 트림은 옵션을 추가하더라도 [${missingLabels}] 사양을 충족할 수 없어 제외했습니다.</div>`;
     });
   }
