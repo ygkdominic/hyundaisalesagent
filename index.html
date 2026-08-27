@@ -201,6 +201,20 @@ body.has-totalbar{padding-bottom:110px;}
 .bc-btn:hover{background:#E5E8EB;}
 .bc-sep{color:var(--tx-light);}
 
+.delivery-info{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  font-size:15px;font-weight:800;
+}
+.delivery-text{
+  white-space:nowrap;
+}
+.delivery-text.ours{
+  color:var(--hyundai-blue-mid);
+}
+.delivery-text.competitor{
+  color:var(--accent-warn);
+}
+
 .search-wrap{
   margin-left:auto;
   display:flex;align-items:center;gap:10px;flex-wrap:wrap;
@@ -681,6 +695,9 @@ body.has-totalbar #backToTopBtn{bottom:110px;}
     <span class="bc-sep">|</span>
     <strong id="mainBreadcrumb">아반떼 · 가솔린</strong>
 
+    <span class="bc-sep" id="deliverySep">|</span>
+    <div class="delivery-info" id="deliveryInfo"></div>
+
     <div class="search-wrap" id="searchWrap">
       <div class="search-box" id="searchBox">
         <input type="text" id="searchInput" placeholder="찾기 (예: 통풍시트, 하이패스)">
@@ -861,6 +878,12 @@ const HYUNDAI_DATA = {
             catalog:'https://www.hyundai.com/contents/repn-car/catalog/the-all-new-avante-catalog.pdf',
             digital:'https://www.hyundai.com/kr/ko/e/vehicles/the-all-new-avante/catalog'
                  },
+            /* ★ 납기 정보 — 없으면 이 필드를 생략하면 됩니다. 그러면 납기 영역이 자동으로 숨겨집니다. */
+          delivery:{
+            ours:'3개월',
+            competitorName:'셀토스 ICE',
+            competitor:'4.5개월'
+                },
           trims: [
             {
               id:'modern', name:'모던', price:23980000,
@@ -1097,6 +1120,12 @@ const HYUNDAI_DATA = {
             catalog:'https://www.hyundai.com/contents/repn-car/catalog/the-all-new-avante-hybrid-catalog.pdf',
             digital:'https://www.hyundai.com/kr/ko/e/vehicles/the-all-new-avante-hybrid/catalog'
                  },
+            /* ★ 납기 정보 — 없으면 이 필드를 생략하면 됩니다. 그러면 납기 영역이 자동으로 숨겨집니다. */
+          delivery:{
+            ours:'10월 중 출고개시 예상',
+            competitorName:'셀토스 HEV',
+            competitor:'4.5개월'
+                },
           trims: [
             {
               id:'modern', name:'모던', price:30420000,
@@ -1344,7 +1373,13 @@ const HYUNDAI_DATA = {
             catalog:'https://www.hyundai.com/contents/repn-car/catalog/the-new-grandeur-catalog.pdf',
             digital:'https://www.hyundai.com/kr/ko/e/vehicles/the-new-grandeur/catalog'
                  },
-          trims: [
+            /* ★ 납기 정보 — 없으면 이 필드를 생략하면 됩니다. 그러면 납기 영역이 자동으로 숨겨집니다. */
+          delivery:{
+            ours:'2개월',
+            competitorName:'K8',
+            competitor:'4~5주'
+                },
+            trims: [
             {
               id:'premium', name:'프리미엄', price:42450000,
               add:{
@@ -1541,6 +1576,12 @@ const HYUNDAI_DATA = {
             catalog:'https://www.hyundai.com/contents/repn-car/catalog/the-new-grandeur-hybrid-catalog.pdf',
             digital:'https://www.hyundai.com/kr/ko/e/vehicles/the-new-grandeur-hybrid/catalog'
                  },
+            /* ★ 납기 정보 — 없으면 이 필드를 생략하면 됩니다. 그러면 납기 영역이 자동으로 숨겨집니다. */
+          delivery:{
+            ours:'3개월',
+            competitorName:'K8',
+            competitor:'4~5주'
+                },
             trims: [
             {
               id:'premium', name:'프리미엄', price:48330000,
@@ -1804,6 +1845,7 @@ function renderPtGrid(){
      selectedOptionKeys = new Set();
       updatePowertrainUI(p);
      renderDocLinks();          /* ← 이 줄 추가 */
+     renderDeliveryInfo();      /* ← 이 줄 추가 */
      resetSearch();          /* ← 이 줄 추가 */
      renderAll();
      renderPrefGrid();
@@ -1854,6 +1896,33 @@ function renderDocLinks(){
     .filter(it => !!it.url)
     .map(it => `<a class="vtab vtab-link" href="${it.url}" target="_blank" rel="noopener noreferrer">${it.label}</a>`)
     .join('');
+}
+
+function renderDeliveryInfo(){
+  const wrap = document.getElementById('deliveryInfo');
+  const sep = document.getElementById('deliverySep');
+  const carObj = HYUNDAI_DATA.cars[currentCar];
+  const pt = (carObj && currentPowertrain) ? carObj.powertrains[currentPowertrain] : null;
+  const delivery = pt && pt.delivery;
+
+  if(!delivery){
+    wrap.innerHTML = '';
+    sep.style.display = 'none';
+    return;
+  }
+
+  sep.style.display = 'inline';
+
+  let html = '';
+  if(delivery.ours){
+    html += `<span class="delivery-text ours">납기 ${delivery.ours}</span>`;
+  }
+  if(delivery.competitor){
+    const label = delivery.competitorName ? `${delivery.competitorName} 납기` : '경쟁사 납기';
+    html += `<span class="delivery-text competitor">${label} ${delivery.competitor}</span>`;
+  }
+
+  wrap.innerHTML = html;
 }
 
 function getSpecItemElements(){
