@@ -818,6 +818,36 @@ body.has-totalbar #backToTopBtn{bottom:110px;}
 .fin-meta strong{color:var(--tx-primary);}
 .fin-tbl-wrap{margin:8px 0 10px;}
 
+/* 주요 USP — 하이라이트 카드 그리드 */
+@keyframes uspCardIn{
+  from{opacity:0;transform:translateY(14px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.usp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:4px;}
+.usp-card{
+  background:#fff;border:2px solid var(--bd);border-radius:var(--r-xl);padding:18px 16px;min-height:150px;
+  cursor:pointer;position:relative;transition:all .18s cubic-bezier(.34,1.2,.64,1);
+  opacity:0;animation:uspCardIn .42s cubic-bezier(.22,1,.36,1) forwards;
+  display:flex;flex-direction:column;
+}
+.usp-card:hover{transform:translateY(-2px);border-color:var(--hyundai-blue);box-shadow:0 8px 22px rgba(0,0,0,.08);}
+.usp-card.active{border-color:var(--hyundai-blue);background:var(--hyundai-blue-light);}
+.usp-card-badge{align-self:flex-start;font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:20px;background:#FFF5F5;color:#C62828;margin-bottom:10px;white-space:nowrap;}
+.usp-card-stat{font-size:24px;font-weight:900;color:var(--tx-primary);line-height:1.15;}
+.usp-card-statsub{font-size:12.5px;font-weight:700;color:var(--hyundai-blue-mid);margin-top:2px;}
+.usp-card-label{font-size:13px;color:var(--tx-muted);line-height:1.55;margin-top:auto;padding-top:10px;}
+.usp-card-arrow{position:absolute;right:16px;bottom:16px;font-size:13px;font-weight:900;color:var(--tx-light);transition:transform .2s;}
+.usp-card.active .usp-card-arrow{transform:rotate(90deg);color:var(--hyundai-blue);}
+.usp-detail-panel{
+  max-height:0;overflow:hidden;opacity:0;
+  transition:max-height .32s cubic-bezier(.22,1,.36,1),opacity .28s ease,margin .32s ease;
+  background:var(--bg-subtle);border-radius:var(--r-xl);margin-top:0;
+}
+.usp-detail-panel.open{max-height:900px;opacity:1;margin-top:14px;}
+.usp-detail-inner{padding:18px 20px;font-size:13.5px;color:var(--tx-secondary);line-height:1.8;}
+.usp-detail-title{font-size:15px;font-weight:800;color:var(--tx-primary);margin-bottom:10px;}
+.usp-detail-inner strong{color:var(--hyundai-blue-mid);font-weight:800;}
+
 /* 보조금 접수현황 프로토타입 */
 .subsidy-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:20px;flex-wrap:wrap;}
 .subsidy-title{font-size:24px;font-weight:800;}
@@ -1556,12 +1586,7 @@ body.has-totalbar #backToTopBtn{bottom:110px;}
       <div class="car-hd-title">주요 USP</div>
       <div class="car-hd-sub">차종별 핵심 셀링 포인트를 준비하고 있습니다.</div>
     </div>
-    <div style="background:#FFF5F5;border:1.5px solid rgba(240,68,82,0.3);border-radius:8px;padding:12px 14px;margin-bottom:14px;">
-      <strong style="color:#C62828;font-size:14.5px;line-height:1.8;">[중요] 신형 아반떼 관련 안내사항<br>
-      · 스마트키 보조키 1개만 지급 (향후 현대 전차종 모델이어 시점부터 1개씩 지급 예정, 제네시스는 확인 중)<br>
-      · 타이어 모빌리티 키트(TMK) 미지급 (향후 현대차종 개조차 이상 이벤트 시점부터, 제네시스 MY 이벤트 시점부터 미지급)</strong>
-    </div>
-    <div class="reco-placeholder">주요 USP 콘텐츠는 준비 중입니다.</div>
+    <div id="usp-content"><div class="reco-placeholder">주요 USP 콘텐츠는 준비 중입니다.</div></div>
   </div>
 
   </div>
@@ -15837,6 +15862,213 @@ function renderAll(){
   updateTotalBarVisibility();
 }
 
+/* ════════════════════════════════
+   주요 USP — 차종별 콘텐츠
+   (아반떼: '디 올 뉴 아반떼 세일즈가이드' 기준)
+════════════════════════════════ */
+var CAR_USP = {
+  avante: {
+    notice: {
+      title: '[중요] 신형 아반떼 관련 안내사항',
+      body: '· 스마트키 보조키 1개만 지급 (향후 현대 전차종 모델이어 시점부터 1개씩 지급 예정, 제네시스는 확인 중)<br>'
+        + '· 타이어 모빌리티 키트(TMK) 미지급 (향후 현대차종 개조차 이상 이벤트 시점부터, 제네시스 MY 이벤트 시점부터 미지급)'
+    },
+    items: [
+      {
+        badge: '동급 최초', stat: '14.6″', statSub: '대화면 디스플레이', label: '글레오 AI · 앱마켓 · OTA — 살수록 똑똑해지는 차',
+        title: '플레오스 커넥트 — 동급 최초 SDV 인포테인먼트',
+        body: '<div class="fin-hook">스마트폰처럼 매일 진화하는 차, "이 차는 살수록 더 똑똑해집니다"</div>'
+          + '<ul style="margin:0;padding-left:18px;line-height:1.9;">'
+          + '<li><strong>12.9/14.6인치 대화면</strong> 디스플레이 · 스마트폰과 동일한 16:9 화면비</li>'
+          + '<li><strong>글레오 AI</strong>: 대형언어모델(LLM) 기반 자연어 인식 — "춥다, 다시 닫아줘" 같은 비명시적 요청도 이해</li>'
+          + '<li>앱마켓으로 스포티파이·유튜브 등 서드파티 앱 설치, <strong>OTA(무선 소프트웨어 업데이트)</strong>로 계속 진화</li>'
+          + '<li><strong>루틴 기능</strong>: 평일 출근 시간 시동 시 목적지 자동설정 등 조건부 자동화</li>'
+          + '</ul>'
+      },
+      {
+        badge: '993mm', stat: '+29mm', statSub: '2열 레그룸', label: '기아 셀토스보다 넓은 실내 공간',
+        title: '차급을 뛰어넘는 실내 공간',
+        body: '<div class="fin-hook">"소형 SUV보다 훨씬 넓고 안락해서, 부부가 타기에도 아이들과 타기에도 충분히 여유로워요"</div>'
+          + '<ul style="margin:0;padding-left:18px;line-height:1.9;">'
+          + '<li>2열 레그룸 <strong>993mm(기존 대비 +29mm)</strong> — 기아 셀토스(965mm)보다 넓음</li>'
+          + '<li>숄더룸 <strong>1,434mm(+22mm)</strong> — 셀토스(1,395mm) 대비 우위, 177cm 성인도 여유로운 착좌</li>'
+          + '<li>전장 <strong>4,765mm(+55)</strong> · 휠베이스 <strong>2,750mm(+30)</strong> · 전폭 <strong>1,855mm(+30)</strong> — 중형 세단급 존재감</li>'
+          + '<li>트렁크 용량 <strong>479ℓ(VDA 기준, +5ℓ)</strong> — 그랜저(480ℓ)와 단 <strong>1ℓ 차이</strong>인 준대형급 트렁크 공간<br>'
+          + '<strong>골프백 3개+보스턴백 3개</strong> 또는 <strong>골프백 4개+보스턴백 2개</strong> 수납 가능, 개구부 확대로 수납 편의성 향상</li>'
+          + '</ul>'
+      },
+      {
+        badge: '파워 UP', stat: '149마력', statSub: '가솔린 2.0 (+26)', label: 'HEV 157마력(+16) · 연비도 함께 향상',
+        title: '강력해진 파워트레인 (가솔린 2.0 / HEV)',
+        body: '<div class="fin-hook">중형차급 심장을 얹은 준중형 — 성능도, 연비도 한 단계 위</div>'
+          + '<ul style="margin:0;padding-left:18px;line-height:1.9;">'
+          + '<li>가솔린 2.0: <strong>149마력(기존 1.6 대비 +26마력)</strong> · 18.3kgf·m</li>'
+          + '<li>HEV: 시스템 출력 <strong>157마력(+16)</strong> · 복합연비 <strong>21.2km/ℓ(+2.0)</strong></li>'
+          + '<li><strong>HEV 스테이 모드</strong>: 엔진 구동 없이 배터리 전력만으로 공조·인포테인먼트 사용 — EV 같은 정숙한 대기</li>'
+          + '<li><strong>스마트 회생제동 3.0</strong>: 내비 경로+전방차량 기반 회생제동 가변 제어로 연비·안전성 동시 강화</li>'
+          + '</ul>'
+      },
+      {
+        badge: '당사 최초', stat: '에어백 10개', statSub: '(기존 8개)', label: 'NSCC2·SBW P버튼·FCA2 등 최초 사양 다수',
+        title: '당사·동급 최초 안전/편의 사양',
+        body: '<div class="fin-hook">"이 가격대에 이런 사양이? 준중형인데 상위 차급 수준의 안전"</div>'
+          + '<ul style="margin:0;padding-left:18px;line-height:1.9;">'
+          + '<li><strong>당사 최초</strong> 내비게이션 기반 스마트 크루즈 컨트롤2(NSCC2) — 과속구간·방지턱·교차로 자동 감속</li>'
+          + '<li><strong>당사 최초</strong> SBW P버튼 긴급제동 — 운전자 이상 발생 시 동승자가 버튼 하나로 제동</li>'
+          + '<li><strong>동급 최초</strong> 페달 오조작 안전 보조 — 급가속 오조작 시 자동 제동으로 사고 예방</li>'
+          + '<li><strong>동급 최초</strong> 전방충돌방지보조2(FCA2) — 교차로 대향차·측방접근차까지 인식</li>'
+          + '<li>기억 후진 보조(MRA)·원격 스마트 주차 보조(RSPA) — 좁은 골목·주차도 버튼 하나로 해결</li>'
+          + '<li><strong>에어백 10개</strong>(기존 8개, 기아 셀토스 9개) — 동급 최고 수준 안전바디</li>'
+          + '</ul>'
+      },
+      {
+        badge: '프리미엄', stat: '12스피커', statSub: '뱅앤올룹슨', label: '디지털키2(UWB) · 빌트인캠2 Plus',
+        title: '프리미엄 사양 (오디오·디지털키·빌트인캠)',
+        body: '<div class="fin-hook">준중형인데 이 정도 프리미엄 사양은 처음이에요</div>'
+          + '<ul style="margin:0;padding-left:18px;line-height:1.9;">'
+          + '<li>오디오 by <strong>뱅앤올룹슨 12스피커</strong>(옵션) — 5.1채널 서라운드 사운드</li>'
+          + '<li><strong>디지털 키2</strong>: 스마트폰(UWB) 소지만으로 도어개폐+시동, 별도 태그 불필요</li>'
+          + '<li><strong>빌트인 캠2 Plus</strong>: 전후방 QHD+ 화질, 최대 20시간 상시녹화, OTA 업데이트 지원</li>'
+          + '<li><strong>듀얼 무선충전 + 100W 고출력</strong> USB-C 포트 4개 — 4인 가족 동시 충전</li>'
+          + '</ul>'
+      },
+      {
+        badge: '상담 Tip', stat: 'Q&A', statSub: '대응 스크립트', label: '"세금 오르지 않나요?" 등 예상 질문 답변',
+        title: '예상 질문 대응 스크립트',
+        body: '<div class="fin-meta"><strong>Q. 플레오스 커넥트가 나한테 어떤 도움이 되나요?</strong></div>'
+          + '<div style="margin-bottom:10px;line-height:1.8;">A. 시선 이동을 줄이는 화면배치·음성제어로 <strong>안전한 사용 경험</strong>, 모바일 친화적 UX로 <strong>쉬운 사용성</strong>, 앱마켓·OTA로 <strong>계속 진화하는 차량 가치</strong>까지 세 가지 장점이 있습니다.</div>'
+          + '<div class="fin-meta"><strong>Q. 엔진이 2.0으로 커지면 자동차세도 오르지 않나요?</strong></div>'
+          + '<div style="line-height:1.8;">A. 연간 자동차세가 약 23만원 정도 더 들 수 있지만, 스마트 크루즈 컨트롤 같은 첨단 안전 기능이 기본 적용돼 <strong>보험료를 최대 10~15% 할인</strong> 받으실 수 있어 실질 부담은 상쇄됩니다.</div>'
+      }
+    ]
+  },
+  grandeur: {
+    items: [
+      {
+        badge: '당사 최초', stat: '17″', statSub: '중앙 디스플레이', label: '글레오 AI · 앱마켓 — "스마트폰이 내 차로"',
+        title: '플레오스 커넥트 — 당사 최초 SDV 인포테인먼트',
+        body: '<div class="fin-hook">"스마트폰이 내 차로" — 플래그십 세단의 품격에 걸맞은 모바일 익스텐션 경험</div>'
+          + '<ul style="margin:0;padding-left:18px;line-height:1.9;">'
+          + '<li><strong>당사 최초 17인치 중앙 디스플레이</strong> · 스마트폰과 유사한 직관적 UI, 화면 분할로 내비+미디어 동시 조작</li>'
+          + '<li><strong>글레오 AI</strong>: 연속 대화·맥락 이해 기반 LLM 에이전트 — "비 내리는 것 같은데 창문 닫고 에어컨 켜줘" 같은 복합 명령도 한 번에 처리</li>'
+          + '<li>앱마켓으로 서드파티 앱 지속 추가 · 소프트키+하드키 병행으로 조작 편의성 확보</li>'
+          + '<li>기존 12.3인치 클러스터+내비게이션을 하나로 통합, <strong>"Always Connect"</strong>로 구매 후에도 계속 진화</li>'
+          + '</ul>'
+      },
+      {
+        badge: '동승자 배려', stat: '3존 공조', statSub: '독립 제어', label: '동승석 에르고모션시트 등 온 가족 배려',
+        title: '품격 있는 패밀리카 — 디자인 · 동승자 편의성',
+        body: '<div class="fin-hook">운전자만이 아니라 온 가족을 배려한 플래그십 세단</div>'
+          + '<ul style="margin:0;padding-left:18px;line-height:1.9;">'
+          + '<li>샤크 노즈 컨셉 그릴 + 심리스 호라이즌 램프로 슬릭하고 고급스러운 전면부, <strong>히든 안테나(당사 세단 최초)</strong>로 깔끔한 루프라인</li>'
+          + '<li><strong>3존 독립 제어 에어컨</strong> — 2열 탑승객도 온도·모드 개별 설정</li>'
+          + '<li><strong>동승석 에르고 모션 시트</strong>(현대 최초 동승석 확대) — 컴포트 스트레칭·자세보조로 동승자 안락감 개선</li>'
+          + '<li>양문형 콘솔 암레스트+열선, 1·2열 <strong>100W 고출력 USB-C 4개소</strong> — 온 가족 동시 충전</li>'
+          + '</ul>'
+      },
+      {
+        badge: '당사 최초', stat: '+42%', statSub: '스마트비전루프 개구면적', label: '전동식 에어벤트 · 1열 모니터링 등 신기술 4종',
+        title: '당사 최초 신기술 4종',
+        body: '<div class="fin-hook">"날씨따라 기분따라", "보이지 않는 배려", "언제나 함께하는 시선" — 신기술이 만드는 프리미엄 감성</div>'
+          + '<ul style="margin:0;padding-left:18px;line-height:1.9;">'
+          + '<li><strong>스마트 비전 루프</strong>(당사 최초): 기존 대비 <strong>개구면적 42%↑, 헤드룸 +51mm</strong>, 6단계 영역별 투명/불투명 조절 · 경쟁사 대비 <strong>열차단 성능 30%↑</strong></li>'
+          + '<li><strong>전동식 에어벤트</strong>(당사 최초): 노브 없는 히든벤트, FOCUS/SPREAD/CYCLE 등 풍향모드로 개인화된 공조 경험</li>'
+          + '<li><strong>1열 모니터링 시스템</strong>(당사 최초, 영상회의 지원): 동승자 자세·졸음운전 실시간 감지, 정차 시 화상회의까지 지원</li>'
+          + '<li><strong>기억 후진 보조(MRA)</strong>(당사 최초): 좁은 골목 후진 시 왔던 경로 그대로 자동 조향</li>'
+          + '</ul>'
+      },
+      {
+        badge: 'TMED-Ⅱ', stat: '239마력', statSub: '(+13)', label: '18.4km/ℓ(+0.4) 동급 최고 연비',
+        title: '차세대 하이브리드 상품성 (TMED-Ⅱ)',
+        body: '<div class="fin-hook">"일상 주행에서는 전기차 같은 부드러운 주행 질감" — 당사 세단 최초 차세대 하이브리드</div>'
+          + '<ul style="margin:0;padding-left:18px;line-height:1.9;">'
+          + '<li>시스템 합산출력 <strong>239마력(기존 대비 +13)</strong> · 복합연비 <strong>18.4km/ℓ(+0.4)</strong> — 동급 최고 연비 경쟁력</li>'
+          + '<li>0→100km/h 가속 <strong>8.0초(-0.3)</strong>, 80→120km/h 추월가속 <strong>5.2초(-0.2)</strong> — 출력·연비 동시 향상</li>'
+          + '<li><strong>하이브리드 스테이 모드</strong>(당사 세단 최초): 엔진 구동 없이 배터리로 공조·인포테인먼트 사용, EV 같은 무시동 대기</li>'
+          + '<li><strong>2열 통풍+리클라이닝 시트</strong> 하이브리드 확대 적용(당사 세단 최초, 기존 ICE 전용) — 하이브리드 고객도 동일한 편의성</li>'
+          + '</ul>'
+      },
+      {
+        badge: '신규', stat: '디지털키2', statSub: '+RSPA 연동', label: '스마트카드키3세대(NFC) · 빌트인캠2 Plus',
+        title: '프리미엄 신사양 (디지털키2 · 빌트인캠 · 스마트카드키)',
+        body: '<div class="fin-hook">디테일까지 챙긴 플래그십다운 완성도</div>'
+          + '<ul style="margin:0;padding-left:18px;line-height:1.9;">'
+          + '<li><strong>디지털 키2 + 원격 스마트 주차 보조(RSPA)</strong> 신규 연동 — UWB 지원 스마트폰 소지만으로 도어개폐·시동</li>'
+          + '<li><strong>스마트 카드키 3세대</strong>(당사 최초): 한손 조작 세로형 배열 + NFC 기능으로 카드키 방전 시에도 사용 가능</li>'
+          + '<li><strong>빌트인 캠2 Plus</strong>: 전후방 QHD+ 화질, 모션감지 녹화(최대 4일/530회), 고용량 SD카드 교체 지원</li>'
+          + '<li><strong>와이드 선바이저 미러</strong>(당사 최초, 폭 2배 확대), 페달 오조작 안전 보조(당사 내연기관 최초)</li>'
+          + '</ul>'
+      },
+      {
+        badge: '상담 Tip', stat: '세일즈 Tip', statSub: '핵심 소구 요약', label: '타겟 고객·세대별 어필 포인트 정리',
+        title: '고객 후킹 포인트 요약',
+        body: '<div class="fin-meta"><strong>대상 고객:</strong> 품격과 첨단 기술을 동시에 원하는 플래그십 세단 구매 고객, 가족 동승이 잦은 실용 중심 고객</div>'
+          + '<div class="fin-meta"><strong>핵심 소구:</strong> "동급이 아니라 상급을 경험하는 그랜저" — 당사 최초 플레오스 커넥트·스마트비전루프·1열모니터링 등 신기술 밀도가 가장 높은 세단</div>'
+          + '<ul style="margin:6px 0 0;padding-left:18px;line-height:1.9;">'
+          + '<li>경쟁 하이브리드 세단 대비 연비·출력 동시 우위(<strong>239마력/18.4km/ℓ</strong>) 강조</li>'
+          + '<li>스마트 비전 루프·3존 공조 등 "가족 배려" 사양은 5060 패밀리 고객에게 특히 효과적</li>'
+          + '<li>플레오스 커넥트·글레오 AI는 젊은 세대 고객에게 "최신 기술 세단" 이미지로 어필</li>'
+          + '</ul>'
+      }
+    ]
+  }
+};
+
+function renderUsp(){
+  var body = document.querySelector('#page-usp .car-hd-sub');
+  var container = document.getElementById('usp-content');
+  if(!container) return;
+  var data = CAR_USP[currentCar];
+  if(!data){
+    container.innerHTML = '<div class="reco-placeholder">주요 USP 콘텐츠는 준비 중입니다.</div>';
+    if(body) body.textContent = '차종별 핵심 셀링 포인트를 준비하고 있습니다.';
+    return;
+  }
+  if(body) body.textContent = '카드를 눌러 핵심 포인트를 빠르게 확인하세요.';
+  var html = '';
+  if(data.notice){
+    html += '<div style="background:#FFF5F5;border:1.5px solid rgba(240,68,82,0.3);border-radius:8px;padding:12px 14px;margin-bottom:14px;">'
+      + '<strong style="color:#C62828;font-size:14.5px;line-height:1.8;">' + data.notice.title + '<br>' + data.notice.body + '</strong>'
+      + '</div>';
+  }
+  html += '<div class="usp-grid">'
+    + data.items.map(function(it, i){
+        return '<div class="usp-card" data-usp-idx="' + i + '" style="animation-delay:' + (i * 70) + 'ms;">'
+          + '<span class="usp-card-badge">' + it.badge + '</span>'
+          + '<div class="usp-card-stat">' + it.stat + '</div>'
+          + (it.statSub ? '<div class="usp-card-statsub">' + it.statSub + '</div>' : '')
+          + '<div class="usp-card-label">' + it.label + '</div>'
+          + '<span class="usp-card-arrow">▸</span>'
+          + '</div>';
+      }).join('')
+    + '</div>'
+    + '<div class="usp-detail-panel" id="usp-detail-panel"><div class="usp-detail-inner" id="usp-detail-inner"></div></div>';
+  container.innerHTML = html;
+
+  var cards = container.querySelectorAll('.usp-card');
+  var panel = document.getElementById('usp-detail-panel');
+  var inner = document.getElementById('usp-detail-inner');
+  var activeIdx = null;
+  cards.forEach(function(card){
+    card.addEventListener('click', function(){
+      var idx = Number(card.dataset.uspIdx);
+      if(activeIdx === idx){
+        panel.classList.remove('open');
+        card.classList.remove('active');
+        activeIdx = null;
+        return;
+      }
+      cards.forEach(function(c){ c.classList.remove('active'); });
+      card.classList.add('active');
+      var it = data.items[idx];
+      inner.innerHTML = '<div class="usp-detail-title">' + it.title + '</div>' + it.body;
+      panel.classList.add('open');
+      activeIdx = idx;
+      setTimeout(function(){ card.scrollIntoView({behavior:'smooth', block:'nearest'}); }, 120);
+    });
+  });
+}
+
 document.querySelectorAll('.vtab:not(.vtab-link)').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     playSelectAnim(btn);
@@ -15846,6 +16078,7 @@ document.querySelectorAll('.vtab:not(.vtab-link)').forEach(btn=>{
     document.getElementById('page-' + btn.dataset.page).classList.add('active');
     updateTotalBarVisibility();
     if(btn.dataset.page === 'bestseller') setTimeout(equalizeBestsellerRows, 30);
+    if(btn.dataset.page === 'usp') renderUsp();
   });
 });
 
