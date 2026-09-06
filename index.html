@@ -799,6 +799,8 @@ body.has-totalbar #backToTopBtn{bottom:110px;}
   box-shadow:0 2px 14px rgba(0,0,0,.04);cursor:pointer;position:relative;transition:all .18s cubic-bezier(.34,1.2,.64,1);
 }
 .eco-card:hover,.fin-card:hover{transform:translateY(-2px);border-color:var(--hyundai-blue);box-shadow:0 8px 22px rgba(0,0,0,.08);}
+.eco-card.disabled{cursor:default;opacity:.55;}
+.eco-card.disabled:hover{transform:none;border-color:var(--bd);box-shadow:0 2px 14px rgba(0,0,0,.04);}
 .eco-card.new{border-color:rgba(0,180,147,.28);background:linear-gradient(135deg,#F6FFFC 0%,#FFFFFF 70%);}
 .eco-card-top,.fin-card .eco-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
 .eco-card-icon,.fin-card .eco-card-icon{width:38px;height:38px;border-radius:13px;background:var(--hyundai-blue-light);color:var(--hyundai-blue-mid);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;}
@@ -848,6 +850,18 @@ body.has-totalbar #backToTopBtn{bottom:110px;}
 .usp-detail-title{font-size:15px;font-weight:800;color:var(--tx-primary);margin-bottom:10px;}
 .usp-detail-inner strong{color:var(--hyundai-blue-mid);font-weight:800;}
 
+/* 주요 FAQ — 질문+답변이 함께 보이는 정적 카드 그리드 */
+.faq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:4px;}
+.faq-card{
+  background:#fff;border:2px solid var(--bd);border-radius:var(--r-xl);padding:18px 16px;
+  opacity:0;animation:uspCardIn .42s cubic-bezier(.22,1,.36,1) forwards;
+}
+.faq-card-qbadge{display:inline-block;font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:20px;background:var(--hyundai-blue-light);color:var(--hyundai-blue-mid);margin-bottom:10px;}
+.faq-card-question{font-size:15px;font-weight:800;color:var(--tx-primary);line-height:1.45;margin-bottom:10px;}
+.faq-card-answer{font-size:13.5px;color:var(--tx-secondary);line-height:1.75;}
+.faq-card-answer strong{color:var(--hyundai-blue-mid);font-weight:800;}
+.faq-a-label{color:var(--hyundai-blue-mid);font-weight:800;}
+
 /* 보조금 접수현황 프로토타입 */
 .subsidy-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:20px;flex-wrap:wrap;}
 .subsidy-title{font-size:24px;font-weight:800;}
@@ -867,6 +881,120 @@ body.has-totalbar #backToTopBtn{bottom:110px;}
 .metric-label{font-size:11.5px;color:var(--tx-muted);}.metric-value{font-size:14px;font-weight:800;margin-top:2px;}
 .detail-btn{border:none;background:var(--hyundai-blue-light);color:var(--hyundai-blue-mid);font-family:'Noto Sans KR',sans-serif;font-size:12.5px;font-weight:800;padding:8px 11px;border-radius:12px;cursor:pointer;}
 .prototype-alert{background:#FFF8E8;border:1px solid rgba(255,159,10,.25);color:#7A5200;font-size:13px;font-weight:600;line-height:1.7;padding:12px 15px;border-radius:var(--r-md);margin-bottom:16px;}
+.subsidy-update-note{font-size:12px;color:var(--tx-muted);margin-bottom:14px;}
+.subsidy-scope-tabs{display:flex;gap:8px;margin-bottom:16px;}
+.subsidy-scope-tabs button{border:none;background:var(--bg);color:var(--tx-secondary);font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:800;padding:10px 16px;border-radius:var(--r-md);cursor:pointer;}
+.subsidy-scope-tabs button.active{background:var(--hyundai-blue);color:#fff;}
+.subsidy-cal-wrap{background:#fff;border:1px solid var(--bd);border-radius:var(--r-xl);padding:16px 18px 18px;margin-bottom:18px;box-shadow:0 2px 12px rgba(0,0,0,.05);}
+.subsidy-cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.subsidy-cal-head button{border:none;background:var(--bg-subtle);color:var(--tx-secondary);width:32px;height:32px;border-radius:50%;font-size:16px;cursor:pointer;}
+.subsidy-cal-title{font-size:15.5px;font-weight:800;}
+.subsidy-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.subsidy-cal-dow{text-align:center;font-size:11.5px;color:var(--tx-muted);font-weight:700;padding-bottom:6px;}
+.subsidy-cal-cell{position:relative;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:var(--r-md);font-size:13px;color:var(--tx-secondary);cursor:default;}
+.subsidy-cal-cell.has-event{cursor:pointer;background:var(--bg-subtle);}
+.subsidy-cal-cell.has-event:hover{background:var(--hyundai-blue-light);}
+.subsidy-cal-cell.empty{visibility:hidden;}
+.subsidy-cal-dots{display:flex;gap:2px;margin-top:3px;}
+.subsidy-cal-dot{width:5px;height:5px;border-radius:50%;}
+.subsidy-cal-dot.notice{background:var(--hyundai-blue);}
+.subsidy-cal-dot.receipt{background:var(--accent-warn);}
+.subsidy-cal-legend{display:flex;gap:14px;margin-top:12px;font-size:12px;color:var(--tx-muted);}
+.subsidy-cal-legend span{display:inline-flex;align-items:center;gap:5px;}
+.subsidy-cal-legend .dot{width:7px;height:7px;border-radius:50%;}
+.subsidy-cal-legend .dot.notice{background:var(--hyundai-blue);}
+.subsidy-cal-legend .dot.receipt{background:var(--accent-warn);}
+
+/* 보조금 상세 슬라이드오버 */
+#subsidy-slide-dim{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:900;opacity:0;pointer-events:none;transition:opacity .28s ease;}
+#subsidy-slide-dim.show{opacity:1;pointer-events:auto;}
+#subsidy-slide-card{position:fixed;bottom:0;left:0;right:0;z-index:901;background:#fff;border-radius:24px 24px 0 0;box-shadow:0 -6px 40px rgba(0,0,0,.18);transform:translateY(100%);transition:transform .32s cubic-bezier(.32,1,.48,1);max-width:480px;margin:0 auto;max-height:80vh;display:flex;flex-direction:column;}
+#subsidy-slide-card.show{transform:translateY(0);}
+.subsidy-slide-handle{width:36px;height:4px;background:#E5E8EB;border-radius:2px;margin:14px auto 0;flex-shrink:0;}
+.subsidy-slide-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 12px;border-bottom:1px solid rgba(0,0,0,.06);flex-shrink:0;}
+.subsidy-slide-title{font-size:16px;font-weight:800;color:var(--tx-primary);}
+.subsidy-slide-close{border:none;background:var(--bg-subtle);color:var(--tx-secondary);font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;padding:8px 13px;border-radius:var(--r-md);cursor:pointer;}
+.subsidy-slide-body{padding:14px 20px 24px;overflow-y:auto;}
+.subsidy-slide-item{padding:12px 0;border-bottom:1px solid rgba(0,0,0,.05);}
+.subsidy-slide-item:last-child{border-bottom:none;}
+.subsidy-slide-item-top{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
+.subsidy-slide-region{font-size:14.5px;font-weight:800;}
+.subsidy-slide-detail{font-size:13px;color:var(--tx-muted);line-height:1.6;}
+
+/* 접속 시 업데이트 공지 팝업 (데스크탑/태블릿용 중앙 모달) */
+#notice-dim{
+  position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:2600;
+  display:flex;align-items:center;justify-content:center;padding:24px;
+  opacity:0;pointer-events:none;transition:opacity .28s ease;
+}
+#notice-dim.show{opacity:1;pointer-events:auto;}
+#notice-modal{
+  background:#fff;border-radius:var(--r-xl);box-shadow:0 24px 64px rgba(0,0,0,.28);
+  width:100%;max-width:560px;max-height:min(720px,86vh);display:flex;flex-direction:column;overflow:hidden;
+  transform:scale(.94) translateY(10px);opacity:0;transition:all .28s cubic-bezier(.22,1,.36,1);
+}
+#notice-dim.show #notice-modal{transform:scale(1) translateY(0);opacity:1;}
+.notice-header{background:var(--hyundai-blue-light);padding:22px 90px 18px 26px;flex-shrink:0;position:relative;}
+.notice-header-badge{display:inline-block;background:var(--hyundai-blue);color:#fff;font-size:11.5px;font-weight:800;padding:4px 10px;border-radius:20px;margin-bottom:10px;}
+.notice-header-title{font-size:20px;font-weight:900;color:var(--tx-primary);}
+.notice-header-date{font-size:12.5px;color:var(--tx-muted);margin-top:4px;font-weight:600;}
+.notice-close-btn{position:absolute;top:18px;right:20px;border:none;background:rgba(255,255,255,.75);color:var(--tx-secondary);font-size:13px;font-weight:700;padding:7px 14px;border-radius:var(--r-md);cursor:pointer;font-family:'Noto Sans KR',sans-serif;}
+.notice-close-btn:hover{background:#fff;color:var(--tx-primary);}
+.notice-body{padding:18px 26px;overflow-y:auto;flex:1;}
+.notice-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid rgba(0,0,0,.06);}
+.notice-item:first-child{padding-top:2px;}
+.notice-item:last-child{border-bottom:none;}
+.notice-item-tag{flex-shrink:0;font-size:11px;font-weight:800;padding:3px 9px;border-radius:20px;background:var(--bg-subtle);color:var(--hyundai-blue-mid);white-space:nowrap;height:fit-content;margin-top:1px;}
+.notice-item-tag.new{background:#E8FBF4;color:#008A70;}
+.notice-item-tag.emphasis{background:#FFF4E0;color:#B26B00;}
+.notice-item-title{font-size:14.5px;font-weight:800;color:var(--tx-primary);line-height:1.5;}
+.notice-item-desc{font-size:13px;color:var(--tx-secondary);line-height:1.65;margin-top:3px;}
+.notice-item-desc strong{color:var(--hyundai-blue-mid);font-weight:800;}
+.notice-footer{display:flex;align-items:center;justify-content:flex-end;padding:14px 26px;border-top:1px solid rgba(0,0,0,.06);flex-shrink:0;background:var(--bg-subtle);}
+.notice-hide-btn{border:1px solid var(--bd);background:#fff;color:var(--tx-secondary);font-size:13px;font-weight:700;padding:9px 16px;border-radius:var(--r-md);cursor:pointer;font-family:'Noto Sans KR',sans-serif;}
+.notice-hide-btn:hover{background:var(--bg-subtle);border-color:var(--tx-light);}
+
+/* 튜토리얼 트리거 버튼 */
+.tutorial-trigger-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:#fff;color:var(--tx-primary);
+  font-size:14px;font-weight:700;padding:6px 16px;border-radius:20px;
+  box-shadow:0 2px 8px rgba(49,130,246,0.15);
+  border:none;cursor:pointer;font-family:'Noto Sans KR',sans-serif;
+  transition:all .15s;flex-shrink:0;
+}
+.tutorial-trigger-btn:hover{background:var(--hyundai-blue);color:#fff;box-shadow:0 4px 14px rgba(49,130,246,0.3);}
+
+/* 튜토리얼 목차 팝업 */
+#tutorial-toc-dim{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:2000;opacity:0;pointer-events:none;transition:opacity .28s ease;}
+#tutorial-toc-dim.show{opacity:1;pointer-events:auto;}
+#tutorial-toc-card{position:fixed;bottom:0;left:0;right:0;z-index:2001;background:#fff;border-radius:24px 24px 0 0;box-shadow:0 -6px 40px rgba(0,0,0,.18);transform:translateY(100%);transition:transform .32s cubic-bezier(.32,1,.48,1);max-width:480px;margin:0 auto;max-height:80vh;display:flex;flex-direction:column;}
+#tutorial-toc-card.show{transform:translateY(0);}
+.tutorial-toc-handle{width:36px;height:4px;background:#E5E8EB;border-radius:2px;margin:14px auto 0;flex-shrink:0;}
+.tutorial-toc-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 12px;border-bottom:1px solid rgba(0,0,0,.06);flex-shrink:0;}
+.tutorial-toc-title{font-size:16px;font-weight:800;color:var(--tx-primary);}
+.tutorial-toc-close{border:none;background:var(--bg-subtle);color:var(--tx-secondary);font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;padding:8px 13px;border-radius:var(--r-md);cursor:pointer;}
+.tutorial-toc-body{padding:12px 16px 24px;overflow-y:auto;}
+.tutorial-toc-item{width:100%;text-align:left;background:#fff;border:1px solid var(--bd);border-radius:var(--r-lg);padding:14px 16px;margin-bottom:10px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .15s;}
+.tutorial-toc-item:hover{border-color:var(--hyundai-blue);background:var(--hyundai-blue-light);}
+.tutorial-toc-item-title{font-size:15px;font-weight:800;color:var(--tx-primary);}
+.tutorial-toc-item-desc{font-size:12.5px;color:var(--tx-muted);margin-top:4px;line-height:1.6;}
+.tutorial-toc-item-steps{font-size:11.5px;color:var(--hyundai-blue-mid);font-weight:700;margin-top:6px;}
+
+/* 튜토리얼 스포트라이트 투어 */
+#tutorial-overlay{position:fixed;inset:0;z-index:3000;display:none;}
+#tutorial-overlay.show{display:block;}
+#tutorial-spotlight{position:fixed;border-radius:14px;box-shadow:0 0 0 9999px rgba(0,0,0,.65);transition:all .32s cubic-bezier(.32,1,.48,1);pointer-events:none;}
+#tutorial-tooltip{position:fixed;background:#fff;border-radius:var(--r-xl);box-shadow:0 8px 32px rgba(0,0,0,.22);padding:18px 20px;max-width:320px;width:calc(100% - 40px);transition:top .32s ease,left .32s ease;}
+.tutorial-tooltip-step{font-size:11.5px;font-weight:800;color:var(--hyundai-blue-mid);margin-bottom:6px;}
+.tutorial-tooltip-title{font-size:16px;font-weight:800;color:var(--tx-primary);margin-bottom:6px;}
+.tutorial-tooltip-desc{font-size:13.5px;color:var(--tx-secondary);line-height:1.7;margin-bottom:16px;}
+.tutorial-tooltip-nav{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.tutorial-tooltip-btn{border:none;font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;padding:9px 14px;border-radius:var(--r-md);cursor:pointer;}
+.tutorial-tooltip-btn.skip{background:transparent;color:var(--tx-muted);padding-left:0;}
+.tutorial-tooltip-btn.prev{background:var(--bg-subtle);color:var(--tx-secondary);}
+.tutorial-tooltip-btn.next{background:var(--hyundai-blue);color:#fff;}
+.tutorial-tooltip-btn:disabled{opacity:.4;cursor:default;}
 
 @media(max-width:960px){
   .mode-grid{grid-template-columns:repeat(2,1fr);}
@@ -1052,6 +1180,51 @@ body.has-totalbar #backToTopBtn{bottom:110px;}
         <a href="https://ev.or.kr/nportal/main.do" target="_blank" rel="noopener noreferrer">무공해차 통합누리집</a>
       </div>
     </div>
+    <button type="button" class="tutorial-trigger-btn" id="tutorialTriggerBtn">튜토리얼</button>
+  </div>
+</div>
+
+<!-- 접속 시 업데이트 공지 팝업 -->
+<div id="notice-dim">
+  <div id="notice-modal" role="dialog" aria-modal="true" aria-label="공지사항">
+    <div class="notice-header">
+      <span class="notice-header-badge">공지사항</span>
+      <button type="button" class="notice-close-btn" id="noticeCloseBtn">닫기</button>
+      <div class="notice-header-title">업데이트 안내</div>
+      <div class="notice-header-date" id="noticeDate"></div>
+    </div>
+    <div class="notice-body" id="noticeBody"></div>
+    <div class="notice-footer">
+      <button type="button" class="notice-hide-btn" id="noticeHideTodayBtn">오늘 하루 열지 않기</button>
+    </div>
+  </div>
+</div>
+
+<!-- 튜토리얼 목차 팝업 -->
+<div id="tutorial-toc-dim"></div>
+<div id="tutorial-toc-card" role="dialog" aria-modal="true" aria-label="튜토리얼 목차">
+  <div class="tutorial-toc-handle"></div>
+  <div class="tutorial-toc-header">
+    <span class="tutorial-toc-title">튜토리얼</span>
+    <button class="tutorial-toc-close" id="tutorialTocClose">닫기</button>
+  </div>
+  <div class="tutorial-toc-body" id="tutorialTocBody"></div>
+</div>
+
+<!-- 튜토리얼 스포트라이트 투어 -->
+<div id="tutorial-overlay">
+  <div id="tutorial-spotlight"></div>
+  <div id="tutorial-tooltip">
+    <div class="tutorial-tooltip-step" id="tutorialStepCount">1 / 6</div>
+    <div class="tutorial-tooltip-title" id="tutorialStepTitle"></div>
+    <div class="tutorial-tooltip-desc" id="tutorialStepDesc"></div>
+    <div class="tutorial-tooltip-nav">
+      <button class="tutorial-tooltip-btn skip" id="tutorialSkipBtn">종료</button>
+      <div style="display:flex;gap:8px;">
+        <button class="tutorial-tooltip-btn prev" id="tutorialPrevBtn">이전</button>
+        <button class="tutorial-tooltip-btn next" id="tutorialNextBtn">다음</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1070,8 +1243,8 @@ body.has-totalbar #backToTopBtn{bottom:110px;}
       <div class="mode-card eco" id="goEcoConsult">
         <div class="mode-icon"><img src="./assets/icons/eco.svg" alt=""></div>
         <div class="mode-name">전기·수소차 혜택 상담</div>
-        <div class="mode-desc">구매혜택, 보조금, 부담다운 견적을 한 곳에서 확인합니다.</div>
-        <div class="mode-tags"><span class="mode-tag">구매혜택</span><span class="mode-tag">보조금</span><span class="mode-tag">간편견적</span></div>
+        <div class="mode-desc">구매혜택, 보조금, 부담다운 견적, 접수현황을 한 곳에서 확인합니다.</div>
+        <div class="mode-tags"><span class="mode-tag">구매혜택</span><span class="mode-tag">보조금</span><span class="mode-tag">간편견적</span><span class="mode-tag">접수현황</span></div>
         <div class="mode-arrow">→</div>
       </div>
       <div class="mode-card finance" id="goFinanceConsult">
@@ -1165,7 +1338,7 @@ body.has-totalbar #backToTopBtn{bottom:110px;}
       <div class="consult-sub">2026년 기준 차종별 핵심 적립 혜택을 확인합니다.</div>
     </div>
 
-    <div class="consult-card">
+    <div class="consult-card" id="bmCardHyundai">
       <div class="consult-card-title">현대차 블루멤버스 — 차종별 적립 포인트</div>
       <div class="bm-legend">개인회원 — 구매 횟수별 차등 적립 · 법인회원 — 횟수 무관 고정 정액</div>
       <div class="tbl-wrap">
@@ -1185,7 +1358,7 @@ body.has-totalbar #backToTopBtn{bottom:110px;}
       </div>
     </div>
 
-    <div class="consult-card">
+    <div class="consult-card" id="bmCardTaxi">
       <div class="consult-card-title">현대차 택시 적립 기준 (구매횟수 무관)</div>
       <div class="tbl-wrap">
         <table class="bm-tbl">
@@ -1198,7 +1371,7 @@ body.has-totalbar #backToTopBtn{bottom:110px;}
       </div>
     </div>
 
-    <div class="consult-card">
+    <div class="consult-card" id="bmCardGenesis">
       <div class="consult-card-title">제네시스 멤버십 — 차종별 적립 포인트</div>
       <div class="bm-legend">개인회원 — 구매 횟수별 차등 적립 · 렌트·리스 이용 개인 / 법인 — 횟수 무관</div>
       <div class="tbl-wrap">
@@ -1225,7 +1398,7 @@ body.has-totalbar #backToTopBtn{bottom:110px;}
       </div>
     </div>
 
-    <div class="consult-card">
+    <div class="consult-card" id="bmCardTerms">
       <div class="consult-card-title">적용 기준 및 유의사항</div>
       <ul class="bm-info-list">
         <li>적용: <strong>2026년 5월 1일(금) 이후 출고 고객</strong>부터 적용됩니다.</li>
@@ -1348,7 +1521,7 @@ body.has-totalbar #backToTopBtn{bottom:110px;}
       <div class="consult-title">당사/경쟁사 납기 확인</div>
       <div class="consult-sub">이번 달 기준 당사 전 차종의 납기와 경쟁 차종 납기를 나란히 비교해 확인합니다.</div>
     </div>
-    <div style="background:rgba(240,68,82,0.08);border:1.5px solid rgba(240,68,82,0.3);border-radius:var(--r-sm,8px);padding:12px 14px;margin-bottom:14px;">
+    <div id="deliveryNotice" style="background:rgba(240,68,82,0.08);border:1.5px solid rgba(240,68,82,0.3);border-radius:var(--r-sm,8px);padding:12px 14px;margin-bottom:14px;">
       <strong style="color:#C62828;font-size:14.5px;line-height:1.6;">9월 경쟁사 전기차 납기가 대폭 증가했습니다.<br>참고하셔서 경남 EV 캠페인 연계, 당사 수요로 적극 유도 바랍니다.</strong>
     </div>
     <div id="deliveryContent"></div>
@@ -1361,7 +1534,7 @@ body.has-totalbar #backToTopBtn{bottom:110px;}
   <div class="eco-wrap">
     <div class="screen-back-row"><button class="screen-back-btn" id="ecoBackHome">← 상담 홈</button></div>
     <div class="eco-title">전기·수소차 혜택 상담</div>
-    <div class="eco-sub">고객의 구매조건 확인부터 견적까지 상담에 필요한 정보를 빠르게 확인하세요.</div>
+    <div class="eco-sub">고객의 구매조건 확인부터 견적, 보조금 접수현황까지 상담에 필요한 정보를 빠르게 확인하세요.</div>
     <div class="eco-grid">
       <div class="eco-card" data-eco-action="benefit">
         <div class="eco-card-top"><div class="eco-card-icon">₩</div></div>
@@ -1381,14 +1554,15 @@ body.has-totalbar #backToTopBtn{bottom:110px;}
         <div class="eco-card-desc">고객이 실제 체감하는 초기 부담과 월 납입 기준으로 빠르게 견적을 확인합니다.</div>
         <div class="eco-card-arrow">→</div>
       </div>
-      <div class="eco-card disabled" data-eco-action="status" aria-disabled="true" style="opacity:0.55;cursor:default;pointer-events:none;">
-        <div class="eco-card-top"><div class="eco-card-icon">LIVE</div><span class="eco-card-badge" style="background:var(--bg-subtle,#eee);color:var(--tx-muted,#888);">준비중</span></div>
+      <div class="eco-card disabled" data-eco-action="status">
+        <span class="badge-soon">준비 중</span>
+        <div class="eco-card-top"><div class="eco-card-icon">LIVE</div></div>
         <div class="eco-card-name">보조금 접수현황</div>
-        <div class="eco-card-desc">지자체별 승용·화물·수소차 공고 일정과 접수·선정·잔여 현황을 확인합니다. (준비중)</div>
-        <div class="eco-card-arrow">-</div>
+        <div class="eco-card-desc">현재 준비 중입니다. 추후 별도 링크로 연결될 예정입니다.</div>
+        <div class="eco-card-arrow">→</div>
       </div>
     </div>
-    <div class="eco-note">※ 보조금 접수현황은 준비 중인 기능으로, 무공해차 통합누리집 연동 방식 검증 후 오픈 예정입니다.</div>
+    <div class="eco-note">※ 보조금 접수현황은 준비 중인 기능으로, 추후 안내되는 링크 연결 후 오픈 예정입니다.</div>
   </div>
 </div>
 
@@ -1457,24 +1631,52 @@ body.has-totalbar #backToTopBtn{bottom:110px;}
     <div class="subsidy-head">
       <div>
         <div class="subsidy-title">보조금 접수현황</div>
-        <div class="subsidy-sub">지자체별 공고·접수·선정·잔여 현황을 빠르게 확인합니다.</div>
-      </div>
-      <div class="subsidy-filter">
-        <button class="active">경남</button><button>전국</button><button class="active">승용</button><button>화물</button><button>수소</button>
+        <div class="subsidy-sub">지자체별 공고·접수·잔여 현황을 캘린더에서 한눈에 확인합니다.</div>
       </div>
     </div>
-    <div class="prototype-alert">현재 아래 숫자는 화면 구조 확인을 위한 예시값입니다. 실제 배포 버전에서는 무공해차 통합누리집의 최신 데이터를 연동하고 데이터 갱신시각을 함께 표시합니다.</div>
-    <div class="subsidy-summary">
-      <div class="summary-card"><div class="summary-label">접수 가능</div><div class="summary-value blue">11</div></div>
-      <div class="summary-card"><div class="summary-label">마감 임박</div><div class="summary-value amber">3</div></div>
-      <div class="summary-card"><div class="summary-label">접수 종료</div><div class="summary-value red">4</div></div>
+    <div class="subsidy-update-note" id="subsidyUpdateNote">데이터 불러오는 중...</div>
+    <div class="subsidy-scope-tabs" id="subsidyScopeTabs">
+      <button class="active" data-scope="local">경남 지역별</button>
+      <button data-scope="national">전국 요약</button>
     </div>
-    <div class="subsidy-list">
-      <div class="subsidy-row"><div><div class="region-name">창원시</div><div class="region-sub">전기승용 · 본공고</div></div><span class="status-pill open">접수중</span><div class="metric"><div class="metric-label">접수기간</div><div class="metric-value">~ 11/30</div></div><div class="metric"><div class="metric-label">시스템 기준 잔여</div><div class="metric-value">182대</div></div><button class="detail-btn">상세</button></div>
-      <div class="subsidy-row"><div><div class="region-name">김해시</div><div class="region-sub">전기승용 · 추경</div></div><span class="status-pill soon">마감임박</span><div class="metric"><div class="metric-label">접수기간</div><div class="metric-value">~ 09/05</div></div><div class="metric"><div class="metric-label">시스템 기준 잔여</div><div class="metric-value">37대</div></div><button class="detail-btn">상세</button></div>
-      <div class="subsidy-row"><div><div class="region-name">진주시</div><div class="region-sub">전기승용 · 추경</div></div><span class="status-pill open">접수예정</span><div class="metric"><div class="metric-label">오픈 예정</div><div class="metric-value">09/03</div></div><div class="metric"><div class="metric-label">공고대수</div><div class="metric-value">250대</div></div><button class="detail-btn">상세</button></div>
+
+    <div id="subsidy-scope-local">
+      <div class="subsidy-cal-wrap">
+        <div class="subsidy-cal-head">
+          <button id="subsidyCalPrev" aria-label="이전 달">‹</button>
+          <div class="subsidy-cal-title" id="subsidyCalTitle">-</div>
+          <button id="subsidyCalNext" aria-label="다음 달">›</button>
+        </div>
+        <div class="subsidy-cal-grid" id="subsidyCalGrid"></div>
+        <div class="subsidy-cal-legend">
+          <span><span class="dot notice"></span>공고</span>
+          <span><span class="dot receipt"></span>접수</span>
+        </div>
+      </div>
+      <div class="subsidy-summary" id="subsidyLocalSummary">
+        <div class="summary-card"><div class="summary-label">접수중</div><div class="summary-value blue">-</div></div>
+        <div class="summary-card"><div class="summary-label">접수예정</div><div class="summary-value amber">-</div></div>
+        <div class="summary-card"><div class="summary-label">접수마감</div><div class="summary-value red">-</div></div>
+      </div>
+      <div class="subsidy-list" id="subsidyListLocal"></div>
+    </div>
+
+    <div id="subsidy-scope-national" style="display:none;">
+      <div class="subsidy-summary" id="subsidyNationalSummary"></div>
+      <div class="consult-note">전국 상세 지역별 데이터는 추후 확장 예정이며, 현재는 광역 시/도별 요약만 제공합니다.</div>
     </div>
   </div>
+</div>
+
+<!-- 보조금 상세 슬라이드오버 -->
+<div id="subsidy-slide-dim"></div>
+<div id="subsidy-slide-card" role="dialog" aria-modal="true" aria-label="날짜별 보조금 상세">
+  <div class="subsidy-slide-handle"></div>
+  <div class="subsidy-slide-header">
+    <span class="subsidy-slide-title" id="subsidySlideTitle">날짜 상세</span>
+    <button class="subsidy-slide-close" id="subsidySlideClose">닫기</button>
+  </div>
+  <div class="subsidy-slide-body" id="subsidySlideBody"></div>
 </div>
 
 <!-- 수정 코드 -->
@@ -1509,6 +1711,7 @@ body.has-totalbar #backToTopBtn{bottom:110px;}
     <button class="vtab" data-page="compare">트림별 사양비교</button>
     <button class="vtab" data-page="persona">고객별 모델제안</button>
     <button class="vtab" data-page="usp">주요 USP</button>
+    <button class="vtab" data-page="faq">주요 FAQ</button>
     <div class="doc-links" id="docLinks"></div>
   </div>
 
@@ -1587,6 +1790,14 @@ body.has-totalbar #backToTopBtn{bottom:110px;}
       <div class="car-hd-sub">차종별 핵심 셀링 포인트를 준비하고 있습니다.</div>
     </div>
     <div id="usp-content"><div class="reco-placeholder">주요 USP 콘텐츠는 준비 중입니다.</div></div>
+  </div>
+
+  <div class="page" id="page-faq">
+    <div class="car-hd">
+      <div class="car-hd-title">주요 FAQ</div>
+      <div class="car-hd-sub">차종별 예상 질문과 답변을 준비하고 있습니다.</div>
+    </div>
+    <div id="faq-content"><div class="reco-placeholder">주요 FAQ 콘텐츠는 준비 중입니다.</div></div>
   </div>
 
   </div>
@@ -2924,6 +3135,7 @@ document.getElementById('linkDropdownBtn').addEventListener('click', (e)=>{
 });
 document.addEventListener('click', (e)=>{
   const dd = document.getElementById('linkDropdown');
+  if(e.target.closest && e.target.closest('#tutorial-overlay')) return;
   if(dd.classList.contains('open') && !dd.contains(e.target)) dd.classList.remove('open');
 });
 
@@ -15495,23 +15707,447 @@ document.getElementById('evBenefitBackEco').addEventListener('click', ()=>switch
 document.getElementById('evSubsidyBackEco').addEventListener('click', ()=>switchScreen('screen-eco'));
 document.getElementById('evCalcBackEco').addEventListener('click', ()=>switchScreen('screen-eco'));
 
+/* ════════════════════════════════
+   보조금 접수현황 — 캘린더 / 지역별 리스트 / 슬라이드오버
+════════════════════════════════ */
+(function(){
+  var SUBSIDY_DATA = null;
+  var calYear, calMonth;
+  var todayDate = new Date();
+
+  function pad2(n){ return String(n).padStart(2,'0'); }
+  function fmtDate(d){ return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate()); }
+
+  function statusPillClass(status){
+    if(status === '접수중') return 'open';
+    if(status === '접수예정') return 'soon';
+    return 'closed';
+  }
+
+  function renderSummary(){
+    var counts = {'접수중':0, '접수예정':0, '접수마감':0};
+    (SUBSIDY_DATA.regions||[]).forEach(function(r){
+      if(counts.hasOwnProperty(r.status)) counts[r.status]++;
+    });
+    document.getElementById('subsidyLocalSummary').innerHTML =
+      '<div class="summary-card"><div class="summary-label">접수중</div><div class="summary-value blue">' + counts['접수중'] + '</div></div>'
+      + '<div class="summary-card"><div class="summary-label">접수예정</div><div class="summary-value amber">' + counts['접수예정'] + '</div></div>'
+      + '<div class="summary-card"><div class="summary-label">접수마감</div><div class="summary-value red">' + counts['접수마감'] + '</div></div>';
+  }
+
+  function openSlide(){
+    document.getElementById('subsidy-slide-dim').classList.add('show');
+    document.getElementById('subsidy-slide-card').classList.add('show');
+  }
+  function closeSlide(){
+    document.getElementById('subsidy-slide-dim').classList.remove('show');
+    document.getElementById('subsidy-slide-card').classList.remove('show');
+  }
+
+  function openRegionDetail(region){
+    document.getElementById('subsidySlideTitle').textContent = region.region;
+    document.getElementById('subsidySlideBody').innerHTML =
+      '<div class="subsidy-slide-item">'
+      + '<div class="subsidy-slide-item-top"><span class="subsidy-slide-region">' + region.region + '</span><span class="status-pill ' + statusPillClass(region.status) + '">' + region.status + '</span></div>'
+      + '<div class="subsidy-slide-detail">차종: ' + region.carType + '<br>일정: ' + region.period + '<br>공모/잔여: ' + region.remainNote + '</div>'
+      + '</div>';
+    openSlide();
+  }
+
+  function renderList(){
+    var el = document.getElementById('subsidyListLocal');
+    el.innerHTML = (SUBSIDY_DATA.regions||[]).map(function(r){
+      return '<div class="subsidy-row">'
+        + '<div><div class="region-name">' + r.region + '</div><div class="region-sub">' + r.carType + '</div></div>'
+        + '<span class="status-pill ' + statusPillClass(r.status) + '">' + r.status + '</span>'
+        + '<div class="metric"><div class="metric-label">일정</div><div class="metric-value" style="font-size:12.5px;">' + r.period + '</div></div>'
+        + '<div class="metric"><div class="metric-label">공모/잔여</div><div class="metric-value" style="font-size:12.5px;">' + r.remainNote + '</div></div>'
+        + '<button class="detail-btn" data-region="' + r.region + '">상세</button>'
+        + '</div>';
+    }).join('');
+    el.querySelectorAll('.detail-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var region = (SUBSIDY_DATA.regions||[]).filter(function(r){ return r.region === btn.dataset.region; })[0];
+        if(region) openRegionDetail(region);
+      });
+    });
+  }
+
+  function eventsForDate(dateStr){
+    var list = [];
+    (SUBSIDY_DATA.regions||[]).forEach(function(r){
+      (r.events||[]).forEach(function(e){
+        if(e.date === dateStr) list.push({region:r.region, type:e.type, label:e.label, carType:e.carType, qty:e.qty});
+      });
+    });
+    return list;
+  }
+
+  function openDateDetail(dateStr){
+    var events = eventsForDate(dateStr);
+    var parts = dateStr.split('-');
+    document.getElementById('subsidySlideTitle').textContent = parseInt(parts[1],10) + '월 ' + parseInt(parts[2],10) + '일';
+    var body = document.getElementById('subsidySlideBody');
+    if(!events.length){
+      body.innerHTML = '<div class="subsidy-slide-detail">해당 날짜에 예정된 공고/접수 일정이 없습니다.</div>';
+    } else {
+      body.innerHTML = events.map(function(e){
+        var typeLabel = e.type === 'notice' ? '<span class="status-pill soon">공고</span>' : '<span class="status-pill open">접수</span>';
+        return '<div class="subsidy-slide-item">'
+          + '<div class="subsidy-slide-item-top"><span class="subsidy-slide-region">' + e.region + '</span>' + typeLabel + '</div>'
+          + '<div class="subsidy-slide-detail">' + e.label + ' · ' + e.carType + (e.qty ? ' · ' + e.qty + '대' : '') + '</div>'
+          + '</div>';
+      }).join('');
+    }
+    openSlide();
+  }
+
+  function renderCalendar(){
+    var grid = document.getElementById('subsidyCalGrid');
+    document.getElementById('subsidyCalTitle').textContent = calYear + '년 ' + (calMonth+1) + '월';
+
+    var firstDay = new Date(calYear, calMonth, 1);
+    var startWeekday = firstDay.getDay();
+    var daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+
+    var eventMap = {};
+    (SUBSIDY_DATA.regions||[]).forEach(function(r){
+      (r.events||[]).forEach(function(e){
+        if(!eventMap[e.date]) eventMap[e.date] = {notice:false, receipt:false};
+        eventMap[e.date][e.type] = true;
+      });
+    });
+
+    var html = ['일','월','화','수','목','금','토'].map(function(d){ return '<div class="subsidy-cal-dow">' + d + '</div>'; }).join('');
+    for(var i=0;i<startWeekday;i++) html += '<div class="subsidy-cal-cell empty"></div>';
+    for(var day=1; day<=daysInMonth; day++){
+      var dateStr = calYear + '-' + pad2(calMonth+1) + '-' + pad2(day);
+      var ev = eventMap[dateStr];
+      var isToday = fmtDate(todayDate) === dateStr;
+      var cls = 'subsidy-cal-cell' + (ev ? ' has-event' : '');
+      var dots = ev ? ('<div class="subsidy-cal-dots">' + (ev.notice ? '<span class="subsidy-cal-dot notice"></span>' : '') + (ev.receipt ? '<span class="subsidy-cal-dot receipt"></span>' : '') + '</div>') : '';
+      html += '<div class="' + cls + '" data-date="' + dateStr + '"' + (isToday ? ' style="font-weight:900;color:var(--hyundai-blue);"' : '') + '>' + day + dots + '</div>';
+    }
+    grid.innerHTML = html;
+    grid.querySelectorAll('.subsidy-cal-cell.has-event').forEach(function(cell){
+      cell.addEventListener('click', function(){ openDateDetail(cell.dataset.date); });
+    });
+  }
+
+  function renderNational(){
+    var n = SUBSIDY_DATA.national || {};
+    document.getElementById('subsidyNationalSummary').innerHTML =
+      '<div class="summary-card"><div class="summary-label">전국 지자체</div><div class="summary-value blue">' + (n.totalRegions != null ? n.totalRegions : '-') + '</div></div>'
+      + '<div class="summary-card"><div class="summary-label">접수중(예상)</div><div class="summary-value amber">' + (n.openCount != null ? n.openCount : '-') + '</div></div>'
+      + '<div class="summary-card"><div class="summary-label">접수마감(예상)</div><div class="summary-value red">' + (n.closedCount != null ? n.closedCount : '-') + '</div></div>';
+  }
+
+  function renderUpdateNote(){
+    var note = document.getElementById('subsidyUpdateNote');
+    if(SUBSIDY_DATA.updatedAt){
+      var d = new Date(SUBSIDY_DATA.updatedAt);
+      var str = isNaN(d.getTime()) ? SUBSIDY_DATA.updatedAt : (d.getFullYear() + '.' + pad2(d.getMonth()+1) + '.' + pad2(d.getDate()) + ' ' + pad2(d.getHours()) + ':' + pad2(d.getMinutes()));
+      note.textContent = '마지막 업데이트: ' + str + (SUBSIDY_DATA.source ? ' · ' + SUBSIDY_DATA.source : '');
+    } else {
+      note.textContent = '';
+    }
+  }
+
+  function renderAllSubsidy(){
+    renderUpdateNote();
+    renderCalendar();
+    renderSummary();
+    renderList();
+    renderNational();
+  }
+
+  window.renderSubsidyStatus = function(){
+    if(SUBSIDY_DATA){ renderAllSubsidy(); return; }
+    fetch('./assets/data/subsidy-status.json').then(function(res){
+      if(!res.ok) throw new Error('fetch failed');
+      return res.json();
+    }).then(function(data){
+      SUBSIDY_DATA = data;
+      var d = new Date();
+      calYear = d.getFullYear(); calMonth = d.getMonth();
+      renderAllSubsidy();
+    }).catch(function(){
+      document.getElementById('subsidyUpdateNote').textContent = '데이터를 불러오지 못했습니다. (index.html을 파일로 직접 열면 fetch가 차단될 수 있습니다 — Netlify 등 웹서버 배포 후 정상 동작합니다)';
+      document.getElementById('subsidyLocalSummary').innerHTML = '';
+      document.getElementById('subsidyListLocal').innerHTML = '';
+      document.getElementById('subsidyCalGrid').innerHTML = '';
+      document.getElementById('subsidyNationalSummary').innerHTML = '';
+    });
+  };
+
+  document.getElementById('subsidyScopeTabs').querySelectorAll('button').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.getElementById('subsidyScopeTabs').querySelectorAll('button').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      var scope = btn.dataset.scope;
+      document.getElementById('subsidy-scope-local').style.display = scope === 'local' ? '' : 'none';
+      document.getElementById('subsidy-scope-national').style.display = scope === 'national' ? '' : 'none';
+    });
+  });
+
+  document.getElementById('subsidyCalPrev').addEventListener('click', function(){
+    calMonth--; if(calMonth < 0){ calMonth = 11; calYear--; }
+    renderCalendar();
+  });
+  document.getElementById('subsidyCalNext').addEventListener('click', function(){
+    calMonth++; if(calMonth > 11){ calMonth = 0; calYear++; }
+    renderCalendar();
+  });
+  document.getElementById('subsidySlideClose').addEventListener('click', closeSlide);
+  document.getElementById('subsidy-slide-dim').addEventListener('click', closeSlide);
+})();
+
+/* ════════════════════════════════
+   튜토리얼 모드 — 목차 팝업 + 스포트라이트 투어
+════════════════════════════════ */
+(function(){
+  var TUTORIALS = {
+    overview: {
+      title: '전체 둘러보기',
+      desc: '상담 홈의 6개 메뉴를 순서대로 살펴봅니다.',
+      steps: [
+        { selector:'#goNewCarConsult', title:'신차 상담', desc:'차종별 트림 비교, 베스트셀링 모델, 고객별 모델 제안까지 확인할 수 있습니다.' },
+        { selector:'#goEcoConsult', title:'전기·수소차 상담', desc:'구매혜택, 보조금 조회, 부담다운 견적을 한 곳에서 확인합니다.' },
+        { selector:'#goFinanceConsult', title:'금융상담', desc:'제네시스 파이낸스, EV 부담Down, 특화 할부, 트레이드인 금융 조건을 확인합니다.' },
+        { selector:'#goTradeinConsult', title:'트레이드인 상담', desc:'보유차 조건을 선택하면 트레이드인 적용 여부와 예상 혜택을 바로 확인합니다.' },
+        { selector:'#goBlueConsult', title:'블루멤버스 혜택 확인', desc:'구매 횟수별 적립 포인트와 패밀리 멤버십 혜택을 확인합니다.' },
+        { selector:'#goDeliveryConsult', title:'당사/경쟁사 납기 확인', desc:'이번 달 기준 당사와 경쟁 차종의 납기를 나란히 비교합니다.' },
+        { screen:'screen-home', beforeShow:function(){ var dd=document.getElementById('linkDropdown'); if(dd) dd.classList.add('open'); }, delay:60,
+          selector:'#linkDropdownMenu', title:'우측 상단 바로가기', desc:'화면 어디서든 우측 상단의 바로가기 메뉴로 TOPS, 세일즈 올인원, 무공해차 통합누리집에 바로 접속할 수 있습니다.' }
+      ]
+    },
+    newcar: {
+      title: '신차 상담 자세히 보기',
+      desc: '차종 선택부터 상세 상담 화면까지 이어지는 흐름을 살펴봅니다.',
+      steps: [
+        { screen:'screen-home', beforeShow:function(){ var b=document.getElementById('goNewCarConsult'); if(b) b.click(); }, delay:280,
+          selector:'#carGrid', title:'차종 선택', desc:'상담할 차종을 선택하세요. 선택한 차종에 맞는 파워트레인 옵션이 아래에 이어서 나타납니다.' },
+        { beforeShow:function(){ var c=document.querySelector('#carGrid .select-card:not(.disabled)'); if(c) c.click(); }, delay:200,
+          selector:'#ptGrid', title:'파워트레인 선택', desc:'파워트레인을 선택하면 베스트셀링 모델, 트림별 사양비교, 고객별 모델제안, 주요 USP까지 이어지는 상세 상담 화면으로 이동합니다.' },
+        { beforeShow:function(){ var p=document.querySelector('#ptGrid .select-card:not(.disabled)'); if(p) p.click(); }, delay:420,
+          selector:'#bestsellerContent', title:'베스트셀링 모델', desc:'가장 많이 판매되는 트림 조합을 우선적으로 보여줍니다.' },
+        { beforeShow:function(){ var t=document.querySelector('.vtab[data-page="compare"]'); if(t) t.click(); }, delay:80,
+          selector:'#page-compare', title:'트림별 사양비교', desc:'트림을 선택하면 하위 트림 대비 추가·대체된 사양과 선택한 옵션을 색상으로 구분해 비교할 수 있습니다.' },
+        { beforeShow:function(){ var t=document.querySelector('.vtab[data-page="persona"]'); if(t) t.click(); }, delay:80,
+          selector:'#page-persona', title:'고객별 모델제안', desc:'고객이 원하는 사양을 여러 개 선택하면, 이를 모두 충족하는 가장 경제적인 트림+옵션 조합을 계산해 보여줍니다.' },
+        { beforeShow:function(){ var t=document.querySelector('.vtab[data-page="usp"]'); if(t) t.click(); }, delay:520,
+          selector:'#usp-content', title:'주요 USP', desc:'차종별 핵심 셀링 포인트를 숫자 중심 카드로 한눈에 확인하고, 카드를 누르면 상세 설명이 펼쳐집니다.' },
+        { beforeShow:function(){ var t=document.querySelector('.vtab[data-page="faq"]'); if(t) t.click(); }, delay:80,
+          selector:'#faq-content', title:'주요 FAQ', desc:'고객이 자주 묻는 질문과 상담 답변을 차종별로 모아 확인합니다.' },
+        { selector:'#docLinks', title:'가격표·카탈로그 링크', desc:'가격표, 카탈로그, 디지털 카탈로그 등 상담에 바로 활용할 수 있는 자료 링크로 이동합니다.' }
+      ]
+    },
+    eco: {
+      title: '전기·수소차 상담 자세히 보기',
+      desc: '구매혜택부터 보조금 접수현황까지 4개 메뉴를 살펴봅니다.',
+      steps: [
+        { screen:'screen-home', beforeShow:function(){ var b=document.getElementById('goEcoConsult'); if(b) b.click(); }, delay:280,
+          selector:'.eco-card[data-eco-action="benefit"]', title:'구매혜택', desc:'차종별 기본혜택과 월별 판매조건을 확인합니다.' },
+        { selector:'.eco-card[data-eco-action="subsidy"]', title:'전기차 보조금 조회', desc:'지역과 차종을 선택해 국비·지방비 보조금과 추가 조건별 예상 금액을 계산합니다.' },
+        { selector:'.eco-card[data-eco-action="estimate"]', title:'부담다운 간편견적', desc:'고객이 실제 체감하는 초기 부담과 월 납입 기준으로 빠르게 견적을 확인합니다.' },
+        { selector:'.eco-card[data-eco-action="status"]', title:'보조금 접수현황', desc:'현재 준비 중인 메뉴입니다. 추후 별도 링크로 연결될 예정입니다.' }
+      ]
+    },
+    finance: {
+      title: '금융상담 자세히 보기',
+      desc: '제네시스 파이낸스부터 트레이드인 금융까지 4개 메뉴를 살펴봅니다.',
+      steps: [
+        { screen:'screen-home', beforeShow:function(){ var b=document.getElementById('goFinanceConsult'); if(b) b.click(); }, delay:280,
+          selector:'.fin-card[data-fin-action="genesis"]', title:'제네시스 파이낸스', desc:'리스/렌트 3단 조건, 더블픽, THE BETTER CHOICE, 임직원 특화 할부 조건을 확인합니다.' },
+        { selector:'.fin-card[data-fin-action="ev"]', title:'EV·FCEV 부담Down', desc:'현대 EV 렌트/리스, EV 부담Down, 넥쏘·포터EV 부담Down 조건을 확인합니다.' },
+        { selector:'.fin-card[data-fin-action="special"]', title:'특화 할부', desc:'임직원/그룹사, 현장렌트사, EV 택시 동반자 플랜, 다자녀 가구 특화 조건을 확인합니다.' },
+        { selector:'.fin-card[data-fin-action="tradein"]', title:'트레이드인 금융', desc:'트레이드인 전용카드·할부 금리인하, 제네시스 초장기할부 프로그램을 확인합니다.' }
+      ]
+    },
+    tradein: {
+      title: '트레이드인 상담 자세히 보기',
+      desc: '단계별 선택부터 주요 공지, Q&A까지 살펴봅니다.',
+      steps: [
+        { screen:'screen-home', beforeShow:function(){ var b=document.getElementById('goTradeinConsult'); if(b) b.click(); }, delay:280,
+          selector:'#ti-content', title:'단계별 선택', desc:'보유 중고차와 구매 예정 차량 조건을 순서대로 선택하면 트레이드인 적용 가능 여부와 예상 혜택을 확인합니다.' },
+        { selector:'#ti-notices', title:'9월 트레이드인 주요 공지', desc:'서비스 이용 불가 차량, 노후차 특이사항 등 상담 시 꼭 확인해야 할 공지사항입니다.' },
+        { selector:'#ti-qa', title:'트레이드인 주요 Q&A', desc:'고객이 자주 묻는 질문과 답변을 모아둔 영역입니다.' }
+      ]
+    },
+    blue: {
+      title: '블루멤버스 자세히 보기',
+      desc: '현대차·택시·제네시스 적립 기준과 유의사항을 살펴봅니다.',
+      steps: [
+        { screen:'screen-home', beforeShow:function(){ var b=document.getElementById('goBlueConsult'); if(b) b.click(); }, delay:280,
+          selector:'#bmCardHyundai', title:'현대차 블루멤버스', desc:'개인회원은 구매 횟수별로 차등 적립되고, 법인회원은 횟수와 무관하게 정액으로 적립됩니다.' },
+        { selector:'#bmCardTaxi', title:'택시 적립 기준', desc:'구매 횟수와 무관하게 적용되는 택시 전용 적립 기준입니다.' },
+        { selector:'#bmCardGenesis', title:'제네시스 멤버십', desc:'개인회원은 구매 횟수별로 차등 적립되며, 렌트·리스 이용 개인·법인 회원은 횟수와 무관하게 적립됩니다.' },
+        { selector:'#bmCardTerms', title:'적용 기준 및 유의사항', desc:'포인트 적립 시 반드시 확인해야 할 적용 기준과 유의사항을 정리했습니다.' }
+      ]
+    },
+    delivery: {
+      title: '납기 확인 자세히 보기',
+      desc: '당월 경쟁 동향과 비교표를 살펴봅니다.',
+      steps: [
+        { screen:'screen-home', beforeShow:function(){ var b=document.getElementById('goDeliveryConsult'); if(b) b.click(); }, delay:280,
+          selector:'#deliveryNotice', title:'이달의 참고사항', desc:'해당 월 경쟁사 납기 동향 등 상담 시 참고할 핵심 메시지를 안내합니다.' },
+        { selector:'#deliveryContent', title:'당사·경쟁사 납기 비교표', desc:'이번 달 기준 당사 전 차종의 납기와 경쟁 차종 납기를 나란히 비교해 확인합니다.' }
+      ]
+    }
+  };
+
+  var currentTour = null;
+  var currentStep = 0;
+
+  function renderToc(){
+    var body = document.getElementById('tutorialTocBody');
+    body.innerHTML = Object.keys(TUTORIALS).map(function(key){
+      var t = TUTORIALS[key];
+      return '<button type="button" class="tutorial-toc-item" data-tour="' + key + '">'
+        + '<div class="tutorial-toc-item-title">' + t.title + '</div>'
+        + '<div class="tutorial-toc-item-desc">' + t.desc + '</div>'
+        + '<div class="tutorial-toc-item-steps">' + t.steps.length + '단계</div>'
+        + '</button>';
+    }).join('');
+    body.querySelectorAll('.tutorial-toc-item').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        closeToc();
+        startTour(btn.dataset.tour);
+      });
+    });
+  }
+
+  function openToc(){
+    document.getElementById('tutorial-toc-dim').classList.add('show');
+    document.getElementById('tutorial-toc-card').classList.add('show');
+  }
+  function closeToc(){
+    document.getElementById('tutorial-toc-dim').classList.remove('show');
+    document.getElementById('tutorial-toc-card').classList.remove('show');
+  }
+
+  function startTour(key){
+    currentTour = TUTORIALS[key];
+    if(!currentTour) return;
+    currentStep = 0;
+    document.getElementById('tutorial-overlay').classList.add('show');
+    showStep();
+  }
+
+  function endTour(){
+    document.getElementById('tutorial-overlay').classList.remove('show');
+    var dd = document.getElementById('linkDropdown');
+    if(dd) dd.classList.remove('open');
+    currentTour = null;
+    currentStep = 0;
+  }
+
+  function showStep(){
+    var step = currentTour.steps[currentStep];
+    var dd = document.getElementById('linkDropdown');
+    if(dd) dd.classList.remove('open');
+    if(step.screen && typeof switchScreen === 'function') switchScreen(step.screen);
+    if(typeof step.beforeShow === 'function') step.beforeShow();
+
+    var delay = step.delay != null ? step.delay : 30;
+    setTimeout(function(){
+      var el = document.querySelector(step.selector);
+      if(!el){
+        if(currentStep < currentTour.steps.length - 1){ currentStep++; showStep(); }
+        else endTour();
+        return;
+      }
+      el.scrollIntoView({behavior:'smooth', block:'center'});
+      setTimeout(function(){ positionOverlay(el, step); }, 260);
+    }, delay);
+  }
+
+  function positionOverlay(el, step){
+    var rect = el.getBoundingClientRect();
+    var pad = 8;
+    var spot = document.getElementById('tutorial-spotlight');
+    spot.style.top = (rect.top - pad) + 'px';
+    spot.style.left = (rect.left - pad) + 'px';
+    spot.style.width = (rect.width + pad*2) + 'px';
+    spot.style.height = (rect.height + pad*2) + 'px';
+
+    document.getElementById('tutorialStepCount').textContent = (currentStep+1) + ' / ' + currentTour.steps.length;
+    document.getElementById('tutorialStepTitle').textContent = step.title;
+    document.getElementById('tutorialStepDesc').textContent = step.desc;
+    document.getElementById('tutorialPrevBtn').disabled = currentStep === 0;
+    document.getElementById('tutorialNextBtn').textContent = currentStep === currentTour.steps.length - 1 ? '완료' : '다음';
+
+    var tooltip = document.getElementById('tutorial-tooltip');
+    tooltip.style.visibility = 'hidden';
+    requestAnimationFrame(function(){
+      var tw = tooltip.offsetWidth, th = tooltip.offsetHeight;
+      var top = rect.bottom + pad + 12;
+      if(top + th > window.innerHeight - 12) top = rect.top - pad - th - 12;
+      if(top < 12) top = 12;
+      var left = rect.left + rect.width/2 - tw/2;
+      if(left < 12) left = 12;
+      if(left + tw > window.innerWidth - 12) left = window.innerWidth - tw - 12;
+      tooltip.style.top = top + 'px';
+      tooltip.style.left = left + 'px';
+      tooltip.style.visibility = 'visible';
+    });
+  }
+
+  document.getElementById('tutorialTriggerBtn').addEventListener('click', function(){
+    renderToc();
+    openToc();
+  });
+  document.getElementById('tutorialTocClose').addEventListener('click', closeToc);
+  document.getElementById('tutorial-toc-dim').addEventListener('click', closeToc);
+
+  document.getElementById('tutorialNextBtn').addEventListener('click', function(){
+    if(currentStep < currentTour.steps.length - 1){ currentStep++; showStep(); }
+    else endTour();
+  });
+  document.getElementById('tutorialPrevBtn').addEventListener('click', function(){
+    if(currentStep > 0){ currentStep--; showStep(); }
+  });
+  document.getElementById('tutorialSkipBtn').addEventListener('click', endTour);
+
+  window.addEventListener('resize', function(){
+    if(currentTour){
+      var step = currentTour.steps[currentStep];
+      var el = document.querySelector(step.selector);
+      if(el) positionOverlay(el, step);
+    }
+  });
+})();
+
 const ECO_ACTION_SCREENS = {
   benefit: 'screen-ev-benefit',
   subsidy: 'screen-ev-subsidy',
   estimate: 'screen-ev-calc',
   status: 'screen-subsidy'
 };
+/* 보조금 접수현황: 자체 캘린더 화면은 잠정 비활성화(카드에 .disabled 부여).
+   추후 담당자가 외부 링크를 받으면 아래 status 값에 URL을 채우면
+   자체 화면 대신 새 탭으로 해당 링크가 열립니다. */
+const ECO_EXTERNAL_LINKS = {
+  status: null
+};
 document.querySelectorAll('.eco-card').forEach(card=>{
   card.addEventListener('click', ()=>{
     if(card.classList.contains('disabled')) return;
     playSelectAnim(card);
-    const target = ECO_ACTION_SCREENS[card.dataset.ecoAction];
+    const action = card.dataset.ecoAction;
+    const externalUrl = ECO_EXTERNAL_LINKS[action];
+    if(externalUrl){
+      window.open(externalUrl, '_blank', 'noopener,noreferrer');
+      return;
+    }
+    const target = ECO_ACTION_SCREENS[action];
     if(!target) return;
     setTimeout(()=>{
       switchScreen(target);
       if(target === 'screen-ev-subsidy' && window.renderEvSubsidy) window.renderEvSubsidy();
       if(target === 'screen-ev-calc' && window.renderEvCalc) window.renderEvCalc();
       if(target === 'screen-ev-benefit' && window.renderEvBenefit) window.renderEvBenefit();
+      if(target === 'screen-subsidy' && window.renderSubsidyStatus) window.renderSubsidyStatus();
     }, 120);
   });
 });
@@ -15893,12 +16529,12 @@ var CAR_USP = {
           + '<li>2열 레그룸 <strong>993mm(기존 대비 +29mm)</strong> — 기아 셀토스(965mm)보다 넓음</li>'
           + '<li>숄더룸 <strong>1,434mm(+22mm)</strong> — 셀토스(1,395mm) 대비 우위, 177cm 성인도 여유로운 착좌</li>'
           + '<li>전장 <strong>4,765mm(+55)</strong> · 휠베이스 <strong>2,750mm(+30)</strong> · 전폭 <strong>1,855mm(+30)</strong> — 중형 세단급 존재감</li>'
-          + '<li>트렁크 용량 <strong>479ℓ(VDA 기준, +5ℓ)</strong> — 그랜저(480ℓ)와 단 <strong>1ℓ 차이</strong>인 준대형급 트렁크 공간<br>'
-          + '<strong>골프백 3개+보스턴백 3개</strong> 또는 <strong>골프백 4개+보스턴백 2개</strong> 수납 가능, 개구부 확대로 수납 편의성 향상</li>'
+          + '<li>트렁크 용량 <strong>479ℓ</strong> — 그랜저(480ℓ)와 단 <strong>1ℓ 차이</strong>인 준대형급 트렁크 공간, 개구부 길이 <strong>473mm(기존 대비 +38mm)</strong>로 확대되어 수납 편의성 향상<br>'
+          + '<strong>골프백 3개+보스턴백 4개</strong> 또는 <strong>캐리어 2개+더플백 3개</strong> 동시 수납 가능</li>'
           + '</ul>'
       },
       {
-        badge: '파워 UP', stat: '149마력', statSub: '가솔린 2.0 (+26)', label: 'HEV 157마력(+16) · 연비도 함께 향상',
+        badge: '중형급 파워트레인', stat: '149마력', statSub: '가솔린 2.0 (+26)', label: 'HEV 157마력(+16) · 연비도 함께 향상',
         title: '강력해진 파워트레인 (가솔린 2.0 / HEV)',
         body: '<div class="fin-hook">중형차급 심장을 얹은 준중형 — 성능도, 연비도 한 단계 위</div>'
           + '<ul style="margin:0;padding-left:18px;line-height:1.9;">'
@@ -15909,7 +16545,7 @@ var CAR_USP = {
           + '</ul>'
       },
       {
-        badge: '당사 최초', stat: '에어백 10개', statSub: '(기존 8개)', label: 'NSCC2·SBW P버튼·FCA2 등 최초 사양 다수',
+        badge: '당사 최초', stat: '안전사양 대거 탑재', statSub: '페달 오조작 안전 보조 등', label: 'NSCC2·SBW P버튼·FCA2 등 최초 사양 다수',
         title: '당사·동급 최초 안전/편의 사양',
         body: '<div class="fin-hook">"이 가격대에 이런 사양이? 준중형인데 상위 차급 수준의 안전"</div>'
           + '<ul style="margin:0;padding-left:18px;line-height:1.9;">'
@@ -15931,14 +16567,6 @@ var CAR_USP = {
           + '<li><strong>빌트인 캠2 Plus</strong>: 전후방 QHD+ 화질, 최대 20시간 상시녹화, OTA 업데이트 지원</li>'
           + '<li><strong>듀얼 무선충전 + 100W 고출력</strong> USB-C 포트 4개 — 4인 가족 동시 충전</li>'
           + '</ul>'
-      },
-      {
-        badge: '상담 Tip', stat: 'Q&A', statSub: '대응 스크립트', label: '"세금 오르지 않나요?" 등 예상 질문 답변',
-        title: '예상 질문 대응 스크립트',
-        body: '<div class="fin-meta"><strong>Q. 플레오스 커넥트가 나한테 어떤 도움이 되나요?</strong></div>'
-          + '<div style="margin-bottom:10px;line-height:1.8;">A. 시선 이동을 줄이는 화면배치·음성제어로 <strong>안전한 사용 경험</strong>, 모바일 친화적 UX로 <strong>쉬운 사용성</strong>, 앱마켓·OTA로 <strong>계속 진화하는 차량 가치</strong>까지 세 가지 장점이 있습니다.</div>'
-          + '<div class="fin-meta"><strong>Q. 엔진이 2.0으로 커지면 자동차세도 오르지 않나요?</strong></div>'
-          + '<div style="line-height:1.8;">A. 연간 자동차세가 약 23만원 정도 더 들 수 있지만, 스마트 크루즈 컨트롤 같은 첨단 안전 기능이 기본 적용돼 <strong>보험료를 최대 10~15% 할인</strong> 받으실 수 있어 실질 부담은 상쇄됩니다.</div>'
       }
     ]
   },
@@ -16014,6 +16642,49 @@ var CAR_USP = {
   }
 };
 
+/* ★ 차종별 주요 FAQ — 고객 예상 질문을 통일된 Q&A 형식으로 안내 */
+var CAR_FAQ = {
+  avante: [
+    {q:'LPI 파워트레인은 출시하나요?',
+     a:'<strong>가솔린 2.0, 하이브리드 1.6</strong> 두 가지 파워트레인만 출시할 예정이며, LPI 모델은 출시하지 않습니다.'},
+    {q:'가솔린이 1.6이 아니라 2.0으로 출시된 이유는 무엇이고, 자동차세는 오르지 않나요?',
+     a:'중형 세단급으로 커진 제원에 맞게 출력을 향상시킬 필요가 있었고, <strong>2.0 엔진이 연비 효율·유지보수·내구성·가격 면에서 우수</strong>해 적용했습니다. 연간 자동차세가 약 23만원 정도 더 들 수 있지만, 스마트 크루즈 컨트롤 같은 첨단 안전 기능이 기본 적용돼 <strong>보험료를 최대 10~15% 할인</strong> 받으실 수 있어 실질 부담은 상쇄됩니다.'},
+    {q:'기본트림과 상위트림의 차이는 무엇인가요?',
+     a:'외장은 <strong>헤드램프·리어콤비램프 광원 및 디자인</strong>이 다르고, 내장은 <strong>플레오스 커넥트, 슬림 디스플레이</strong> 등이 주로 다릅니다.<br>'
+       + '<strong style="color:#C62828;">특히 모던·프리미엄 트림에는 전자식 변속 레버가 아닌 일반 노브타입 변속기가 적용되므로, 이 부분은 반드시 고객에게 안내해야 합니다.</strong>'},
+    {q:'트렁크 용량은 어떤가요? 골프백은 몇 개 들어가나요?',
+     a:'트렁크 개구부 길이가 <strong>473mm(기존 대비 +38mm)</strong>로 늘어나 짐을 싣기 편리해졌고, 트렁크 용량은 <strong>479ℓ</strong>로 그랜저(480ℓ)와 동등한 수준의 넉넉한 적재공간입니다. <strong>골프백 3개+보스턴백 4개</strong> 동시 수납, 또는 <strong>캐리어 2개+더플백 3개</strong> 동시 수납이 가능할 정도로 넉넉한 공간을 확보했습니다.'},
+    {q:'센서와 레이더는 몇 개씩 들어가 있나요?',
+     a:'<strong>센서 총 12개</strong>(전방 6개, 후방 6개), <strong>카메라 총 4개</strong>(전·후·좌·우), <strong>레이더 총 5개</strong>(전방 1개, 전측방 2개, 후측방 2개)이며, 트림에 따라 일부 다를 수 있습니다.'},
+    {q:'서스펜션은 어떻게 구성되며, 개선된 부분이 있나요?',
+     a:'가솔린은 <strong>전륜 맥퍼슨 스트럿 / 후륜 CTBA</strong>, 하이브리드는 <strong>전륜 맥퍼슨 스트럿 / 후륜 멀티링크</strong> 구조입니다. <strong>유압식 리바운드 스토퍼</strong> 등 신규 부품이 추가되고 구조·소재 개선을 통해 <strong>중형급 수준의 승차감</strong>을 구현했습니다.'},
+    {q:'플레오스 커넥트가 나한테 어떤 도움이 되나요?',
+     a:'시선 이동을 줄이는 화면배치·음성제어로 <strong>안전한 사용 경험</strong>, 모바일 친화적 UX로 <strong>쉬운 사용성</strong>, 앱마켓·OTA로 <strong>계속 진화하는 차량 가치</strong>까지 세 가지 장점이 있습니다.'}
+  ]
+};
+
+function renderFaq(){
+  var body = document.querySelector('#page-faq .car-hd-sub');
+  var container = document.getElementById('faq-content');
+  if(!container) return;
+  var items = CAR_FAQ[currentCar];
+  if(!items || !items.length){
+    container.innerHTML = '<div class="reco-placeholder">주요 FAQ 콘텐츠는 준비 중입니다.</div>';
+    if(body) body.textContent = '차종별 예상 질문과 답변을 준비하고 있습니다.';
+    return;
+  }
+  if(body) body.textContent = '고객이 자주 묻는 질문과 답변을 한눈에 확인하세요.';
+  container.innerHTML = '<div class="faq-grid">'
+    + items.map(function(it, i){
+        return '<div class="faq-card" style="animation-delay:' + (i * 60) + 'ms;">'
+          + '<span class="faq-card-qbadge">Q</span>'
+          + '<div class="faq-card-question">' + it.q + '</div>'
+          + '<div class="faq-card-answer"><span class="faq-a-label">A.</span> ' + it.a + '</div>'
+          + '</div>';
+      }).join('')
+    + '</div>';
+}
+
 function renderUsp(){
   var body = document.querySelector('#page-usp .car-hd-sub');
   var container = document.getElementById('usp-content');
@@ -16079,6 +16750,7 @@ document.querySelectorAll('.vtab:not(.vtab-link)').forEach(btn=>{
     updateTotalBarVisibility();
     if(btn.dataset.page === 'bestseller') setTimeout(equalizeBestsellerRows, 30);
     if(btn.dataset.page === 'usp') renderUsp();
+    if(btn.dataset.page === 'faq') renderFaq();
   });
 });
 
@@ -16375,6 +17047,65 @@ function updateStatsBadge(today, total){
 
 renderCarGrid();
 window.addEventListener('resize', equalizeBestsellerRows);
+
+/* ════════════════════════════════
+   접속 시 업데이트 공지 팝업
+════════════════════════════════ */
+(function(){
+  var NOTICE_DATE = '2026-09-06';
+  var NOTICE_ITEMS = [
+    {tag:'신규', title:'신차 상담 · 주요 FAQ 탭 추가', desc:'차종별 자주 묻는 질문과 답변을 <strong>주요 USP 탭 다음</strong>에서 한눈에 확인할 수 있습니다.'},
+    {tag:'신규', title:'우측 상단 튜토리얼 기능 추가', desc:'메뉴별 사용법을 <strong>단계별 스포트라이트</strong>로 안내합니다. 우측 상단 "튜토리얼" 버튼을 눌러보세요.'},
+    {tag:'강조', title:'‘고객별 모델제안’ · ‘EV 보조금 조회·부담다운 간편 견적’ 활용하기', desc:'고객 선호 사양만 선택하면 최적 조합을 계산해주는 <strong>고객별 모델제안</strong>과, 지역별 보조금·실부담금을 바로 계산하는 <strong>EV 보조금 조회 및 부담다운 견적</strong> 두 기능을 상담에 적극 활용해보세요.'},
+    {tag:'안내', title:'보조금 접수현황 탭 준비 중', desc:'전기·수소차 상담 내 보조금 접수현황은 현재 준비 중이며, <strong>추후 별도 링크로 연결</strong>될 예정입니다.'}
+  ];
+
+  function todayStr(){
+    var d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+
+  function renderNotice(){
+    var dateEl = document.getElementById('noticeDate');
+    var body = document.getElementById('noticeBody');
+    if(!body) return;
+    if(dateEl) dateEl.textContent = NOTICE_DATE + ' 업데이트';
+    var tagClass = {신규:'new', 강조:'emphasis'};
+    body.innerHTML = NOTICE_ITEMS.map(function(it){
+      return '<div class="notice-item">'
+        + '<span class="notice-item-tag' + (tagClass[it.tag] ? ' ' + tagClass[it.tag] : '') + '">' + it.tag + '</span>'
+        + '<div><div class="notice-item-title">' + it.title + '</div>'
+        + '<div class="notice-item-desc">' + it.desc + '</div></div>'
+        + '</div>';
+    }).join('');
+  }
+
+  function shouldShowNotice(){
+    try{
+      return localStorage.getItem('noticeHideUntil') !== todayStr();
+    }catch(e){
+      return true;
+    }
+  }
+
+  function closeNotice(){
+    document.getElementById('notice-dim').classList.remove('show');
+  }
+
+  document.getElementById('noticeCloseBtn').addEventListener('click', closeNotice);
+  document.getElementById('notice-dim').addEventListener('click', function(e){
+    if(e.target.id === 'notice-dim') closeNotice();
+  });
+  document.getElementById('noticeHideTodayBtn').addEventListener('click', function(){
+    try{ localStorage.setItem('noticeHideUntil', todayStr()); }catch(e){}
+    closeNotice();
+  });
+
+  if(shouldShowNotice()){
+    renderNotice();
+    document.getElementById('notice-dim').classList.add('show');
+  }
+})();
 </script>
 </body>
 </html>
